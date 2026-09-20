@@ -1,10 +1,10 @@
 import { useState } from "react";
 
-import PasosProgreso from "./PasosProgreso";
-import PasoUno from "./PasoUno";
-import PasoDos from "./PasoDos";
-import PasoTres from "./PasoTres";
-import PasoCuatro from "./PasoCuatro";
+import PasosProgreso from "../components/PasosProgreso";
+import PasoUno from "../components/PasoUno";
+import PasoDos from "../components/PasoDos";
+import PasoTres from "../components/PasoTres";
+import PasoCuatro from "../components/PasoCuatro";
 
 import "../styles/AsistenteReserva.css";
 

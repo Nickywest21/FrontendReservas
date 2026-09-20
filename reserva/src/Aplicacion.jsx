@@ -1,9 +1,9 @@
 import { useState } from "react";
 
-import Cabecera from "./components/Header";
-import AsistenteReserva from "./components/AsistenteReserva";
-import Laboratorios from "./components/Laboratorios";
-import Contacto from "./components/Contacto";
+import Cabecera from "./sections/Header";
+import AsistenteReserva from "./sections/AsistenteReserva";
+import Laboratorios from "./sections/Laboratorios";
+import Contacto from "./sections/Contacto";
 
 function Aplicacion() {
 
