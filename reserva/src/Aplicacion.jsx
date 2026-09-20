@@ -1,39 +1,34 @@
-import { useState } from "react";
+import { Routes, Route } from "react-router-dom";
 
-import Cabecera from "./sections/Header";
-import AsistenteReserva from "./sections/AsistenteReserva";
+import Header from "./sections/Header";
+import Inicio from "./sections/inicioPagina";
 import Laboratorios from "./sections/Laboratorios";
+import BookingWizard from "./sections/AsistenteReserva";
 import Contacto from "./sections/Contacto";
 
 function Aplicacion() {
-
-    const [page, setPage] = useState("inicio");
-    const [wizardKey, setWizardKey] = useState(0);
-
-    const handleNavigate = (target) => {
-        if (target === "inicio") {
-            setWizardKey((key) => key + 1);
-        }
-        setPage(target);
-    };
-
     return (
         <>
-            <Cabecera onNavigate={handleNavigate} />
+            <Header />
 
-            <main>
-                {page === "inicio" && (
-                    <AsistenteReserva key={wizardKey} />
-                )}
+            <Routes>
+                <Route path="/" element={<Inicio />} />
 
-                {page === "laboratorios" && (
-                    <Laboratorios onNavigate={handleNavigate} />
-                )}
+                <Route
+                    path="/laboratorios"
+                    element={<Laboratorios />}
+                />
 
-                {page === "contacto" && (
-                    <Contacto />
-                )}
-            </main>
+                <Route
+                    path="/reserva"
+                    element={<BookingWizard />}
+                />
+
+                <Route
+                    path="/contacto"
+                    element={<Contacto />}
+                />
+            </Routes>
         </>
     );
 }
