@@ -1,64 +1,115 @@
-import { useState } from "react";
 
+import { useState } from "react";
+import { NavLink } from "react-router-dom";
 import "../styles/Header.css";
 
-function Header({ onNavigate }) {
+function Header() {
+  const [menuAbierto, setMenuAbierto] = useState(false);
+  const [modoOscuro, setModoOscuro] = useState(() => {
+    return localStorage.getItem("modoOscuro") === "true";
+  });
 
-    const [open, setOpen] = useState(false);
+  // Cambiar entre modo claro y oscuro
+  const cambiarModo = () => {
+    const nuevoModo = !modoOscuro;
 
-    const handleClick = (event, target) => {
-        event.preventDefault();
-        setOpen(false);
-        onNavigate(target);
-    };
+    setModoOscuro(nuevoModo);
+    localStorage.setItem("modoOscuro", nuevoModo);
 
-    return (
-        <header className="header">
+    document.body.classList.toggle("modo-oscuro", nuevoModo);
+  };
 
-            <div className="header-container">
+  // Cerrar el menú móvil
+  const cerrarMenu = () => {
+    setMenuAbierto(false);
+  };
 
-                <div className="logo">
-                    Reserva
-                </div>
+  return (
+    <header className="header">
+      <div className="header-contenedor">
 
-                <button
-                    className={open ? "menu-toggle open" : "menu-toggle"}
-                    aria-label="Abrir menú"
-                    aria-expanded={open}
-                    onClick={() => setOpen(!open)}
-                >
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </button>
+        {/* LOGO */}
+        <NavLink
+          to="/"
+          className="header-logo"
+          onClick={cerrarMenu}
+        >
+          <span className="header-logo-icono">🧪</span>
 
-                {open && (
-                    <nav className="dropdown">
-                        <a
-                            href="#"
-                            onClick={(e) => handleClick(e, "inicio")}
-                        >
-                            Inicio
-                        </a>
-                        <a
-                            href="#"
-                            onClick={(e) => handleClick(e, "laboratorios")}
-                        >
-                            Ver Laboratorios
-                        </a>
-                        <a
-                            href="#"
-                            onClick={(e) => handleClick(e, "contacto")}
-                        >
-                            Contáctanos
-                        </a>
-                    </nav>
-                )}
+          <span className="header-logo-texto">
+            Reserva Labs
+          </span>
+        </NavLink>
 
-            </div>
+        {/* BOTÓN MENÚ MÓVIL */}
+        <button
+          className="header-menu-btn"
+          onClick={() => setMenuAbierto(!menuAbierto)}
+          aria-label="Abrir menú"
+          aria-expanded={menuAbierto}
+        >
+          ☰
+        </button>
 
-        </header>
-    );
+        {/* NAVEGACIÓN */}
+        <nav
+          className={`header-nav ${
+            menuAbierto ? "menu-abierto" : ""
+          }`}
+        >
+          <NavLink
+            to="/"
+            className={({ isActive }) =>
+              isActive ? "header-link activo" : "header-link"
+            }
+            onClick={cerrarMenu}
+          >
+            Inicio
+          </NavLink>
+
+          <NavLink
+            to="/laboratorios"
+            className={({ isActive }) =>
+              isActive ? "header-link activo" : "header-link"
+            }
+            onClick={cerrarMenu}
+          >
+            Laboratorios
+          </NavLink>
+
+          <NavLink
+            to="/reserva"
+            className={({ isActive }) =>
+              isActive ? "header-link activo" : "header-link"
+            }
+            onClick={cerrarMenu}
+          >
+            Reservar
+          </NavLink>
+
+          <NavLink
+            to="/contacto"
+            className={({ isActive }) =>
+              isActive ? "header-link activo" : "header-link"
+            }
+            onClick={cerrarMenu}
+          >
+            Contacto
+          </NavLink>
+
+          {/* MODO OSCURO */}
+          <button
+            className="header-modo-btn"
+            onClick={cambiarModo}
+            aria-label="Cambiar modo de color"
+          >
+            {modoOscuro ? "☀️" : "🌙"}
+          </button>
+        </nav>
+
+      </div>
+    </header>
+  );
 }
 
 export default Header;
