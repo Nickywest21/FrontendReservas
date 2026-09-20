@@ -1,4 +1,4 @@
-import "../styles/ProgressSteps.css";
+import "../styles/PasosProgreso.css";
 
 function ProgressSteps({ currentStep }) {
 

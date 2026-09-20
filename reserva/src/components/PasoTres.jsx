@@ -1,4 +1,4 @@
-import "../styles/Steps.css";
+import "../styles/Pasos.css";
 
 function StepThree({ data, updateData, error }) {
 

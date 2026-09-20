@@ -1,12 +1,12 @@
 import { useState } from "react";
 
-import ProgressSteps from "./ProgressSteps";
-import StepOne from "./StepOne";
-import StepTwo from "./StepTwo";
-import StepThree from "./StepThree";
-import StepFour from "./StepFour";
+import PasosProgreso from "./PasosProgreso";
+import PasoUno from "./PasoUno";
+import PasoDos from "./PasoDos";
+import PasoTres from "./PasoTres";
+import PasoCuatro from "./PasoCuatro";
 
-import "../styles/BookingWizard.css";
+import "../styles/AsistenteReserva.css";
 
 function BookingWizard() {
 
@@ -99,12 +99,12 @@ function BookingWizard() {
 
             <section className="booking-container">
 
-                <ProgressSteps currentStep={currentStep} />
+                <PasosProgreso currentStep={currentStep} />
 
                 <div className="booking-content">
 
                     {currentStep === 1 && (
-                        <StepOne
+                        <PasoUno
                             data={bookingData}
                             updateData={updateData}
                             error={error}
@@ -112,7 +112,7 @@ function BookingWizard() {
                     )}
 
                     {currentStep === 2 && (
-                        <StepTwo
+                        <PasoDos
                             data={bookingData}
                             updateData={updateData}
                             error={error}
@@ -120,7 +120,7 @@ function BookingWizard() {
                     )}
 
                     {currentStep === 3 && (
-                        <StepThree
+                        <PasoTres
                             data={bookingData}
                             updateData={updateData}
                             error={error}
@@ -128,7 +128,7 @@ function BookingWizard() {
                     )}
 
                     {currentStep === 4 && (
-                        <StepFour
+                        <PasoCuatro
                             data={bookingData}
                         />
                     )}
