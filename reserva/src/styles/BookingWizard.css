@@ -1,0 +1,50 @@
+.booking-page {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px 20px;
+}
+
+.booking-container {
+    width: 100%;
+    max-width: 1100px;
+    background: white;
+    border-radius: 20px;
+    padding: 40px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+}
+
+.booking-content {
+    padding: 50px 20px;
+    min-height: 400px;
+}
+
+.booking-buttons {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+}
+
+.booking-buttons button {
+    padding: 13px 30px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.btn-next {
+    margin-left: auto;
+}
+
+.btn-back {
+    background: #eee;
+}
+
+.btn-confirm {
+    padding: 14px 30px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}

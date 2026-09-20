@@ -1,0 +1,181 @@
+.step {
+    max-width: 650px;
+    margin: 0 auto;
+}
+
+.step h1 {
+    margin-bottom: 10px;
+}
+
+.step-description {
+    margin-bottom: 30px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 20px;
+}
+
+.form-group input,
+.form-group select {
+    padding: 13px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 16px;
+}
+
+.summary {
+    background: #f5f5f5;
+    padding: 25px;
+    border-radius: 12px;
+    margin-bottom: 25px;
+}
+
+.step-error {
+    color: #d32f2f;
+    background: #fdecea;
+    border: 1px solid #f5c6c6;
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-size: 14px;
+    margin: 0 0 20px;
+}
+
+.btn-confirm {
+    background: #2196f3;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 14px 30px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.confirmation {
+    text-align: center;
+    padding: 20px 0;
+}
+
+.confetti-container {
+    position: relative;
+    width: 0;
+    height: 0;
+    margin: 0 auto 260px;
+    pointer-events: none;
+}
+
+.confetti-piece {
+    position: absolute;
+    top: 65px;
+    left: 0;
+    width: 10px;
+    height: 14px;
+    border-radius: 2px;
+    opacity: 0;
+    animation: confetti-burst 1s ease-out forwards;
+    animation-delay: var(--confetti-delay);
+}
+
+.success-animation {
+    position: relative;
+    width: 130px;
+    height: 130px;
+    margin: -260px auto 30px;
+}
+
+.success-ring {
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    border: 3px solid #4caf50;
+    opacity: 0;
+    animation: success-ring 1.2s ease-out infinite;
+}
+
+.success-circle {
+    position: absolute;
+    inset: 0;
+    background: #4caf50;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: success-pop 0.45s cubic-bezier(0.18, 0.89, 0.32, 1.28) both;
+}
+
+.success-check-circle {
+    fill: #fff;
+}
+
+.success-check-mark {
+    stroke: #4caf50;
+    stroke-width: 5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-dasharray: 48;
+    stroke-dashoffset: 48;
+    animation: check-draw 0.5s ease-out 0.3s forwards;
+}
+
+.success-title {
+    margin: 25px 0 10px;
+    animation: fade-in 0.6s ease-out both;
+    animation-delay: 0.5s;
+}
+
+.success-text {
+    color: #666;
+    margin: 0;
+    animation: fade-in 0.6s ease-out both;
+    animation-delay: 0.65s;
+}
+
+@keyframes success-pop {
+    0% {
+        transform: scale(0);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+@keyframes success-ring {
+    0% {
+        transform: scale(0.8);
+        opacity: 0.8;
+    }
+    100% {
+        transform: scale(1.4);
+        opacity: 0;
+    }
+}
+
+@keyframes check-draw {
+    to {
+        stroke-dashoffset: 0;
+    }
+}
+
+@keyframes confetti-burst {
+    0% {
+        transform: translate(0, 0) rotate(0deg);
+        opacity: 1;
+    }
+    100% {
+        transform: translate(var(--confetti-x), var(--confetti-y)) rotate(var(--confetti-rotate));
+        opacity: 0;
+    }
+}
+
+@keyframes fade-in {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
