@@ -1,199 +1,290 @@
+/* ========================================
+   HEADER
+======================================== */
 
 .header {
   width: 100%;
+
   position: sticky;
   top: 0;
+
   z-index: 1000;
 
   background-color: #ffffff;
-  border-bottom: 1px solid #e5e5e5;
+
+  border-bottom: 1px solid #bad9ce;
+
+  transition:
+    background-color 0.3s ease,
+    border-color 0.3s ease;
 }
+
 
 .header-contenedor {
   width: 100%;
   max-width: 1200px;
+
   margin: 0 auto;
 
   min-height: 75px;
+
   padding: 0 25px;
 
   display: flex;
+
   align-items: center;
   justify-content: space-between;
 }
 
-/* =========================
+
+/* ========================================
    LOGO
-========================= */
+======================================== */
 
 .header-logo {
   display: flex;
+
   align-items: center;
+
   gap: 10px;
 
-  color: #742111;
+  color: #118c8c;
+
   text-decoration: none;
+
   font-weight: 700;
+
   font-size: 1.2rem;
+
+  transition: color 0.3s ease;
 }
 
+
 .header-logo-icono {
-  font-size: 1.6rem;
+  font-size: 1.5rem;
 }
+
 
 .header-logo-texto {
   white-space: nowrap;
 }
 
-/* =========================
+
+/* ========================================
    NAVEGACIÓN
-========================= */
+======================================== */
 
 .header-nav {
   display: flex;
+
   align-items: center;
+
   gap: 30px;
 }
+
 
 .header-link {
   position: relative;
 
   color: #333333;
+
   text-decoration: none;
 
   font-size: 0.95rem;
+
   font-weight: 500;
 
   padding: 8px 0;
 
-  transition: color 0.2s ease;
+  transition: color 0.25s ease;
 }
+
 
 .header-link:hover {
-  color: #742111;
+  color: #118c8c;
 }
 
-/* Línea de página activa */
+
+/* ========================================
+   PÁGINA ACTIVA
+======================================== */
 
 .header-link.activo {
-  color: #742111;
+  color: #118c8c;
+
   font-weight: 700;
 }
+
 
 .header-link.activo::after {
   content: "";
 
   position: absolute;
+
   left: 0;
   right: 0;
+
   bottom: 0;
 
   height: 2px;
 
-  background-color: #742111;
+  background-color: #f2bb16;
+
   border-radius: 5px;
 }
 
-/* =========================
-   MODO OSCURO
-========================= */
+
+/* ========================================
+   BOTÓN MODO OSCURO
+======================================== */
 
 .header-modo-btn {
   width: 40px;
   height: 40px;
 
   border: none;
+
   border-radius: 50%;
 
-  background-color: transparent;
+  background-color: #bad9ce;
+
+  color: #118c8c;
 
   cursor: pointer;
-  font-size: 1.1rem;
+
+  font-size: 1.05rem;
 
   display: flex;
+
   align-items: center;
   justify-content: center;
 
-  transition: background-color 0.2s ease;
+  transition:
+    background-color 0.25s ease,
+    transform 0.25s ease,
+    color 0.25s ease;
 }
+
 
 .header-modo-btn:hover {
-  background-color: #f0f0f0;
+  background-color: #f2bb16;
+
+  color: #333333;
+
+  transform: rotate(10deg);
 }
 
-/* =========================
+
+/* ========================================
    BOTÓN MENÚ
-========================= */
+======================================== */
 
 .header-menu-btn {
   display: none;
 
   border: none;
+
   background: transparent;
 
   font-size: 1.7rem;
+
   cursor: pointer;
 
-  color: #333333;
+  color: #118c8c;
+
+  transition: color 0.25s ease;
 }
 
-/* =========================
+
+/* ========================================
    MODO OSCURO
-========================= */
+======================================== */
 
 body.modo-oscuro {
-  background-color: #1e1e1e;
+  background-color: #071f20;
+
   color: #ffffff;
 }
+
+
+/* HEADER */
 
 body.modo-oscuro .header {
-  background-color: #252525;
-  border-bottom-color: #3a3a3a;
+  background-color: #071f20;
+
+  border-bottom-color: #0b5d5e;
 }
 
-body.modo-oscuro .header-link {
-  color: #eeeeee;
-}
 
-body.modo-oscuro .header-link:hover,
-body.modo-oscuro .header-link.activo {
-  color: #e6a18f;
-}
-
-body.modo-oscuro .header-link.activo::after {
-  background-color: #e6a18f;
-}
+/* LOGO */
 
 body.modo-oscuro .header-logo {
-  color: #e6a18f;
+  color: #bad9ce;
 }
+
+
+/* ENLACES */
+
+body.modo-oscuro .header-link {
+  color: #d9eeee;
+}
+
+
+body.modo-oscuro .header-link:hover {
+  color: #f2bb16;
+}
+
+
+body.modo-oscuro .header-link.activo {
+  color: #f2bb16;
+}
+
+
+body.modo-oscuro .header-link.activo::after {
+  background-color: #f2bb16;
+}
+
+
+/* BOTÓN OSCURO */
 
 body.modo-oscuro .header-modo-btn {
-  color: #ffffff;
+  background-color: #0b5d5e;
+
+  color: #bad9ce;
 }
+
 
 body.modo-oscuro .header-modo-btn:hover {
-  background-color: #333333;
+  background-color: #f2bb16;
+
+  color: #071f20;
 }
+
+
+/* MENÚ */
 
 body.modo-oscuro .header-menu-btn {
-  color: #ffffff;
+  color: #bad9ce;
 }
 
-/* =========================
+
+/* ========================================
    RESPONSIVE
-========================= */
+======================================== */
 
 @media (max-width: 768px) {
 
   .header-contenedor {
     min-height: 65px;
+
     padding: 0 20px;
   }
+
 
   .header-menu-btn {
     display: block;
   }
+
 
   .header-nav {
     display: none;
@@ -201,37 +292,75 @@ body.modo-oscuro .header-menu-btn {
     position: absolute;
 
     top: 65px;
+
     left: 0;
     right: 0;
 
     padding: 20px;
 
     flex-direction: column;
+
     align-items: stretch;
+
     gap: 10px;
 
     background-color: #ffffff;
-    border-bottom: 1px solid #e5e5e5;
+
+    border-bottom: 1px solid #bad9ce;
+
+    box-shadow:
+      0 8px 20px rgba(17, 140, 140, 0.08);
   }
+
 
   .header-nav.menu-abierto {
     display: flex;
   }
 
+
   .header-link {
     padding: 12px 10px;
   }
+
 
   .header-link.activo::after {
     display: none;
   }
 
+
   .header-modo-btn {
     align-self: flex-start;
   }
 
+
+  /* MENÚ MÓVIL OSCURO */
+
   body.modo-oscuro .header-nav {
-    background-color: #252525;
-    border-bottom-color: #3a3a3a;
+    background-color: #0b3f40;
+
+    border-bottom-color: #0b5d5e;
+
+    box-shadow:
+      0 8px 20px rgba(0, 0, 0, 0.25);
+  }
+}
+
+
+/* ========================================
+   MÓVIL PEQUEÑO
+======================================== */
+
+@media (max-width: 480px) {
+
+  .header-contenedor {
+    padding: 0 15px;
+  }
+
+  .header-logo {
+    font-size: 1.05rem;
+  }
+
+  .header-logo-icono {
+    font-size: 1.3rem;
   }
 }
