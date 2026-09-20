@@ -10,6 +10,8 @@
     margin: 0 auto;
     padding: 20px 30px;
 
+    position: relative;
+
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -20,33 +22,82 @@
     font-weight: 700;
 }
 
-.nav {
+.menu-toggle {
     display: flex;
-    gap: 30px;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 30px;
+    height: 22px;
+    padding: 0;
+    background: transparent;
+    border: none;
+    cursor: pointer;
 }
 
-.nav a {
+.menu-toggle span {
+    display: block;
+    width: 100%;
+    height: 3px;
+    background: #333;
+    border-radius: 2px;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.menu-toggle:hover span {
+    background: #666;
+}
+
+.menu-toggle.open span:nth-child(1) {
+    transform: translateY(9.5px) rotate(45deg);
+}
+
+.menu-toggle.open span:nth-child(2) {
+    opacity: 0;
+}
+
+.menu-toggle.open span:nth-child(3) {
+    transform: translateY(-9.5px) rotate(-45deg);
+}
+
+.dropdown {
+    position: absolute;
+    top: 100%;
+    right: 30px;
+    min-width: 200px;
+
+    display: flex;
+    flex-direction: column;
+    padding: 8px 0;
+
+    background: white;
+    border: 1px solid #e5e5e5;
+    border-radius: 10px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+    z-index: 100;
+
+    animation: dropdown-fade 0.2s ease-out;
+}
+
+.dropdown a {
     text-decoration: none;
     color: #333;
     font-size: 15px;
+    padding: 12px 20px;
+    transition: background 0.2s, color 0.2s;
 }
 
-.nav a:hover {
-    color: #666;
+.dropdown a:hover {
+    background: #f5f5f5;
+    color: #2196f3;
 }
 
-@media (max-width: 600px) {
-
-    .header-container {
-        padding: 18px 20px;
+@keyframes dropdown-fade {
+    from {
+        opacity: 0;
+        transform: translateY(-8px);
     }
-
-    .nav {
-        gap: 15px;
+    to {
+        opacity: 1;
+        transform: translateY(0);
     }
-
-    .nav a {
-        font-size: 14px;
-    }
-
 }

@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import "../styles/Steps.css";
+import "../styles/Pasos.css";
 
 const confetti = [
     { x: -90, y: -60, rotate: 120, delay: 0, color: "#4caf50" },
