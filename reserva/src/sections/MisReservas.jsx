@@ -82,7 +82,7 @@ function MisReservas() {
 
             {cargando && (
                 <div className="mis-reservas-estado" role="status">
-                    <div className="mis-reservas-spinner"></div>
+                    <div className="loader"></div>
                     <p>Cargando tus reservas...</p>
                 </div>
             )}

@@ -135,9 +135,12 @@ function StepTwo({ data, updateData, error, disponibilidad }) {
                 </div>
 
                 {verificando && !errorDisponibilidad && (
-                    <p className="horarios-mensaje horarios-cargando">
-                        Verificando disponibilidad...
-                    </p>
+                    <div className="horarios-cargando">
+                        <div className="loader loader--sm"></div>
+                        <p className="horarios-mensaje">
+                            Verificando disponibilidad...
+                        </p>
+                    </div>
                 )}
 
                 {errorDisponibilidad && (
