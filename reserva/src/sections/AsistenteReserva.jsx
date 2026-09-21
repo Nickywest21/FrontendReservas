@@ -9,10 +9,9 @@ import PasoCuatro from "../components/PasoCuatro";
 import "../styles/AsistenteReserva.css";
 
 function BookingWizard() {
-
     const [currentStep, setCurrentStep] = useState(1);
-
     const [error, setError] = useState("");
+    const [reservaConfirmada, setReservaConfirmada] = useState(false);
 
     const [bookingData, setBookingData] = useState({
         service: "",
@@ -36,9 +35,11 @@ function BookingWizard() {
                 if (!bookingData.date && !bookingData.time) {
                     return "Selecciona fecha y hora para continuar.";
                 }
+
                 if (!bookingData.date) {
                     return "Selecciona la fecha de tu reserva.";
                 }
+
                 if (!bookingData.time) {
                     return "Selecciona la hora de tu reserva.";
                 }
@@ -48,9 +49,11 @@ function BookingWizard() {
                 if (!bookingData.name) {
                     return "Ingresa tu nombre completo.";
                 }
+
                 if (!bookingData.email) {
                     return "Ingresa tu correo electrónico.";
                 }
+
                 if (!bookingData.phone) {
                     return "Ingresa tu número de teléfono.";
                 }
@@ -88,15 +91,19 @@ function BookingWizard() {
 
     const updateData = (field, value) => {
         setError("");
+
         setBookingData({
             ...bookingData,
             [field]: value
         });
     };
 
+    const confirmarReserva = () => {
+        setReservaConfirmada(true);
+    };
+
     return (
         <main className="booking-page">
-
             <section className="booking-container">
 
                 <PasosProgreso currentStep={currentStep} />
@@ -130,6 +137,7 @@ function BookingWizard() {
                     {currentStep === 4 && (
                         <PasoCuatro
                             data={bookingData}
+                            onConfirm={confirmarReserva}
                         />
                     )}
 
@@ -137,7 +145,7 @@ function BookingWizard() {
 
                 <div className="booking-buttons">
 
-                    {currentStep > 1 && (
+                    {currentStep > 1 && !reservaConfirmada && (
                         <button
                             onClick={previousStep}
                             className="btn-back"
@@ -155,10 +163,20 @@ function BookingWizard() {
                         </button>
                     )}
 
+                    {reservaConfirmada && (
+                        <button
+                            className="btn-next btn-ver-confirmacion"
+                            onClick={() => {
+                                console.log("Ver confirmación");
+                            }}
+                        >
+                            Ver confirmación
+                        </button>
+                    )}
+
                 </div>
 
             </section>
-
         </main>
     );
 }
