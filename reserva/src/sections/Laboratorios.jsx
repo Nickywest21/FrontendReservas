@@ -1,19 +1,25 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 import "../styles/Laboratorios.css";
 
-const labsImages = import.meta.glob(
-    "../assets/labs/*/*.svg",
-    { eager: true, import: "default" }
-);
-
-const imagesByLab = Object.entries(labsImages).reduce((acc, [key, url]) => {
-    const folder = key.split("/").at(-2);
-    (acc[folder] ||= []).push(url);
-    return acc;
-}, {});
-
-Object.values(imagesByLab).forEach((list) => list.sort());
+const imagesByLab = {
+    quimica: [
+        "/img1_Quimica.jpg",
+        "/img2_Quimica.jpg",
+        "/img3_Quimica.jpg"
+    ],
+    fisica: [
+        "/img1_Física.jpg",
+        "/img2_Física.jpg",
+        "/img3_Física.jpg"
+    ],
+    computacion: [
+        "/img3_Compu.jpg",
+        "/img2_Compu.jpg",
+        "/img1_Compu.jpg"
+    ]
+};
 
 const laboratories = [
     {
@@ -25,7 +31,8 @@ const laboratories = [
             "Material de vidrio",
             "Control de temperatura"
         ],
-        capacity: "6 a 12 personas"
+        capacity: "6 a 12 personas",
+        images: imagesByLab.quimica
     },
     {
         id: "fisica",
@@ -36,18 +43,20 @@ const laboratories = [
             "Medición de precisión",
             "Equipos mecánicos"
         ],
-        capacity: "8 a 15 personas"
+        capacity: "8 a 15 personas",
+        images: imagesByLab.fisica
     },
     {
-        id: "biologia",
-        name: "Laboratorio de Biología",
-        description: "Instalaciones para estudio de muestras biológicas, microscopía y análisis microbiológico.",
+        id: "computacion",
+        name: "Laboratorio de Computación",
+        description: "Espacio equipado con equipos de cómputo, software especializado y conectividad para prácticas y proyectos.",
         offers: [
-            "Microscopía",
-            "Análisis microbiológico",
-            "Cultivos celulares"
+            "Equipos de cómputo",
+            "Software especializado",
+            "Redes y conectividad"
         ],
-        capacity: "4 a 10 personas"
+        capacity: "10 a 20 personas",
+        images: imagesByLab.computacion
     }
 ];
 
@@ -113,7 +122,9 @@ function Carrusel({ images }) {
     );
 }
 
-function Laboratorios({ onNavigate }) {
+function Laboratorios() {
+
+    const navigate = useNavigate();
 
     return (
         <div className="laboratories-page">
@@ -129,7 +140,7 @@ function Laboratorios({ onNavigate }) {
                 {laboratories.map((lab) => (
                     <div className="lab-card" key={lab.id}>
 
-                        <Carrusel images={imagesByLab[lab.id] || []} />
+                        <Carrusel images={lab.images || []} />
 
                         <div className="lab-info">
 
@@ -151,9 +162,13 @@ function Laboratorios({ onNavigate }) {
 
                                 <button
                                     className="lab-reserve"
-                                    onClick={() => onNavigate("inicio")}
+                                    onClick={() => navigate("/reserva")}
                                 >
-                                    Reservar
+                                    <span className="lab-reserve-shadow"></span>
+                                    <span className="lab-reserve-edge"></span>
+                                    <div className="lab-reserve-front">
+                                        <span>Reservar</span>
+                                    </div>
                                 </button>
 
                                 <span className="lab-capacity">
