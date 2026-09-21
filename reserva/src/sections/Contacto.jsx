@@ -46,26 +46,26 @@ function Contact() {
     {
       icon: phoneIcon,
       title: "Teléfono",
-      text: "(502) 2325-0000",
-      href: "tel:+50223250000"
+      text: "(502) 2426-2626",
+      href: "tel:+50224262626"
     },
     {
       icon: emailIcon,
       title: "Correo",
-      text: "contacto@reserva.lab",
-      href: "mailto:contacto@reserva.lab"
+      text: "ulandivar@url.edu.gt",
+      href: "mailto:ulandivar@url.edu.gt"
     },
     {
       icon: locationIcon,
       title: "Ubicación",
-      text: "Ciudad de Guatemala, Guatemala",
-      href: "#"
+      text: "Vista Hermosa III, Zona 16 Guatemala",
+      href: "https://www.google.com/maps/place/Universidad+Rafael+Landivar/@14.5947807,-90.4857126,17z/data=!3m1!4b1!4m6!3m5!1s0x8589a31955555537:0x9c472efd9face66a!8m2!3d14.5947755!4d-90.4831323!16s%2Fg%2F1229bmz6?entry=tts&g_ep=EgoyMDI2MDExMy4wIPu8ASoASAFQAw%3D%3D&skid=0cceff9d-3f6f-4a70-95b9-b6e975d0fb41"
     }
   ];
 
   const socials = [
-    { name: "Facebook", href: "#" },
-    { name: "Instagram", href: "#" },
+    { name: "Facebook", href: "https://www.facebook.com/UniversidadRafaelLandivar" },
+    { name: "Instagram", href: "https://www.instagram.com/u_landivar/" },
     { name: "WhatsApp", href: "#" }
   ];
 

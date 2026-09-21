@@ -8,13 +8,13 @@ function StepOne({ data, updateData, error }) {
             <h1>Realiza tu reserva</h1>
 
             <p className="step-description">
-                Selecciona el servicio que deseas reservar.
+                Selecciona el laboratorio que deseas reservar.
             </p>
 
             <div className="form-group">
 
                 <label>
-                    Servicio
+                    Laboratorio
                 </label>
 
                 <select
@@ -24,19 +24,19 @@ function StepOne({ data, updateData, error }) {
                     }
                 >
                     <option value="">
-                        Selecciona un servicio
+                        Selecciona un laboratorio
                     </option>
 
                     <option value="servicio1">
-                        Servicio 1
+                        Laboratorio de química
                     </option>
 
                     <option value="servicio2">
-                        Servicio 2
+                        Laboratorio de física
                     </option>
 
                     <option value="servicio3">
-                        Servicio 3
+                        Laboratorio de computación
                     </option>
 
                 </select>

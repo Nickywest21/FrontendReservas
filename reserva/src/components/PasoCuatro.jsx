@@ -17,9 +17,13 @@ const confetti = [
     { x: 40, y: -195, rotate: -80, delay: 0.6, color: "#ff9800" }
 ];
 
-function StepFour({ data }) {
-
+function StepFour({ data, onConfirm }) {
     const [confirmed, setConfirmed] = useState(false);
+
+    const confirmarReserva = () => {
+        setConfirmed(true);
+        onConfirm();
+    };
 
     return (
         <div className="step">
@@ -32,7 +36,6 @@ function StepFour({ data }) {
                     </p>
 
                     <div className="summary">
-
                         <p>
                             <strong>Servicio:</strong> {data.service}
                         </p>
@@ -60,12 +63,11 @@ function StepFour({ data }) {
                         <p>
                             <strong>Teléfono:</strong> {data.phone}
                         </p>
-
                     </div>
 
                     <button
                         className="btn-confirm"
-                        onClick={() => setConfirmed(true)}
+                        onClick={confirmarReserva}
                     >
                         Confirmar reserva
                     </button>
@@ -102,6 +104,7 @@ function StepFour({ data }) {
                                     cy="26"
                                     r="24"
                                 />
+
                                 <path
                                     className="success-check-mark"
                                     fill="none"
