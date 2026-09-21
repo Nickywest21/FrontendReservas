@@ -162,7 +162,7 @@ function Laboratorios() {
 
                                 <button
                                     className="lab-reserve"
-                                    onClick={() => navigate("/reserva")}
+                                    onClick={() => navigate(`/reserva?lab=${lab.id}`)}
                                 >
                                     <span className="lab-reserve-shadow"></span>
                                     <span className="lab-reserve-edge"></span>

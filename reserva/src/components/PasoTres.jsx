@@ -2,6 +2,14 @@ import "../styles/Pasos.css";
 
 function StepThree({ data, updateData, error }) {
 
+    const handleNameChange = (value) => {
+        updateData("name", value.replace(/[^\p{L}\s]/gu, "").slice(0, 50));
+    };
+
+    const handlePhoneChange = (value) => {
+        updateData("phone", value.replace(/\D/g, "").slice(0, 8));
+    };
+
     return (
         <div className="step">
 
@@ -22,7 +30,7 @@ function StepThree({ data, updateData, error }) {
                     placeholder="Nombre completo"
                     value={data.name}
                     onChange={(e) =>
-                        updateData("name", e.target.value)
+                        handleNameChange(e.target.value)
                     }
                 />
 
@@ -56,7 +64,7 @@ function StepThree({ data, updateData, error }) {
                     placeholder="0000-0000"
                     value={data.phone}
                     onChange={(e) =>
-                        updateData("phone", e.target.value)
+                        handlePhoneChange(e.target.value)
                     }
                 />
 

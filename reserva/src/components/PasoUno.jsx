@@ -1,6 +1,34 @@
 import "../styles/Pasos.css";
 
+import { labCapacities } from "../constants/laboratorios";
+
 function StepOne({ data, updateData, error }) {
+
+    const capacity = data.service
+        ? labCapacities[data.service]
+        : null;
+
+    const handleServiceChange = (value) => {
+        updateData("service", value);
+
+        if (labCapacities[value]) {
+            updateData("people", labCapacities[value].min);
+        }
+    };
+
+    const handlePeopleChange = (value) => {
+        if (capacity) {
+            const numericValue = Math.max(
+                capacity.min,
+                Math.min(capacity.max, Number(value || capacity.min))
+            );
+
+            updateData("people", numericValue);
+            return;
+        }
+
+        updateData("people", value);
+    };
 
     return (
         <div className="step">
@@ -20,7 +48,7 @@ function StepOne({ data, updateData, error }) {
                 <select
                     value={data.service}
                     onChange={(e) =>
-                        updateData("service", e.target.value)
+                        handleServiceChange(e.target.value)
                     }
                 >
                     <option value="">
@@ -51,12 +79,19 @@ function StepOne({ data, updateData, error }) {
 
                 <input
                     type="number"
-                    min="1"
+                    min={capacity ? capacity.min : 1}
+                    max={capacity ? capacity.max : undefined}
                     value={data.people}
                     onChange={(e) =>
-                        updateData("people", e.target.value)
+                        handlePeopleChange(e.target.value)
                     }
                 />
+
+                {capacity && (
+                    <p className="step-hint">
+                        Capacidad del laboratorio: {capacity.min} a {capacity.max} personas
+                    </p>
+                )}
 
             </div>
 

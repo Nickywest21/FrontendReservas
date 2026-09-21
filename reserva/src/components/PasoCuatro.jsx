@@ -1,4 +1,7 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
+
+import { labNames } from "../constants/laboratorios";
 
 import "../styles/Pasos.css";
 
@@ -17,12 +20,36 @@ const confetti = [
     { x: 40, y: -195, rotate: -80, delay: 0.6, color: "#ff9800" }
 ];
 
-function StepFour({ data, onConfirm }) {
-    const [confirmed, setConfirmed] = useState(false);
+function StepFour({ data, onConfirm, error }) {
+    const navigate = useNavigate();
 
-    const confirmarReserva = () => {
-        setConfirmed(true);
-        onConfirm();
+    const [confirmed, setConfirmed] = useState(false);
+    const [guardando, setGuardando] = useState(false);
+
+    const redireccionTimer = useRef(null);
+
+    useEffect(() => {
+        return () => {
+            if (redireccionTimer.current) {
+                clearTimeout(redireccionTimer.current);
+            }
+        };
+    }, []);
+
+    const confirmarReserva = async () => {
+        setGuardando(true);
+
+        const success = await onConfirm();
+
+        setGuardando(false);
+
+        if (success) {
+            setConfirmed(true);
+
+            redireccionTimer.current = setTimeout(() => {
+                navigate("/mis-reservas");
+            }, 2000);
+        }
     };
 
     return (
@@ -37,7 +64,7 @@ function StepFour({ data, onConfirm }) {
 
                     <div className="summary">
                         <p>
-                            <strong>Servicio:</strong> {data.service}
+                            <strong>Servicio:</strong> {labNames[data.service] || data.service}
                         </p>
 
                         <p>
@@ -68,9 +95,16 @@ function StepFour({ data, onConfirm }) {
                     <button
                         className="btn-confirm"
                         onClick={confirmarReserva}
+                        disabled={guardando}
                     >
-                        Confirmar reserva
+                        {guardando ? "Guardando..." : "Confirmar reserva"}
                     </button>
+
+                    {error && (
+                        <p className="step-error">
+                            {error}
+                        </p>
+                    )}
                 </>
             ) : (
                 <div className="confirmation">

@@ -1,4 +1,4 @@
-.step {
+﻿.step {
     max-width: 650px;
     margin: 0 auto;
 }
@@ -41,6 +41,59 @@
     padding: 10px 14px;
     font-size: 14px;
     margin: 0 0 20px;
+}
+
+.step-hint {
+    margin: 0;
+    font-size: 13px;
+    color: #118c8c;
+}
+
+.time-slots {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.time-slot {
+    padding: 10px 18px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background: #fff;
+    font-size: 15px;
+    cursor: pointer;
+    transition:
+        border-color 0.2s ease,
+        background-color 0.2s ease,
+        color 0.2s ease;
+}
+
+.time-slot:hover {
+    border-color: #118c8c;
+    color: #118c8c;
+}
+
+.time-slot.active {
+    background: #118c8c;
+    border-color: #118c8c;
+    color: #fff;
+}
+
+body.modo-oscuro .time-slot {
+    background: #082a2b;
+    border-color: #0b5d5e;
+    color: #d9eeee;
+}
+
+body.modo-oscuro .time-slot:hover {
+    border-color: #f2bb16;
+    color: #f2bb16;
+}
+
+body.modo-oscuro .time-slot.active {
+    background: #f2bb16;
+    border-color: #f2bb16;
+    color: #082a2b;
 }
 
 .btn-confirm {

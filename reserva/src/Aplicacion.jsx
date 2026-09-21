@@ -4,6 +4,7 @@ import Header from "./sections/Header";
 import Inicio from "./sections/inicioPagina";
 import Laboratorios from "./sections/Laboratorios";
 import BookingWizard from "./sections/AsistenteReserva";
+import MisReservas from "./sections/MisReservas";
 import Contacto from "./sections/Contacto";
 
 function Aplicacion() {
@@ -22,6 +23,11 @@ function Aplicacion() {
                 <Route
                     path="/reserva"
                     element={<BookingWizard />}
+                />
+
+                <Route
+                    path="/mis-reservas"
+                    element={<MisReservas />}
                 />
 
                 <Route
