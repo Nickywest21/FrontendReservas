@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { getReservations, getSalas } from "../servers/api";
-import { obtenerHora } from "../constants/laboratorios";
 
 import "../styles/MisReservas.css";
 
@@ -12,25 +11,21 @@ const labPalette = [
     { badge: "#8b5cf6", bg: "rgba(139, 92, 246, 0.15)" }
 ];
 
-function formatDate(iso) {
-    if (!iso) {
+function formatDate(fecha) {
+    if (!fecha) {
         return "";
     }
 
-    const [year, month, day] = String(iso).slice(0, 10).split("-");
+    const [year, month, day] = String(fecha).slice(0, 10).split("-");
 
-    const fecha = new Date(year, month - 1, day);
+    const date = new Date(year, month - 1, day);
 
-    return fecha.toLocaleDateString("es-ES", {
+    return date.toLocaleDateString("es-ES", {
         weekday: "long",
         day: "numeric",
         month: "long",
         year: "numeric"
     });
-}
-
-function formatHora(inicio, fin) {
-    return `${obtenerHora(inicio)} - ${obtenerHora(fin)}`;
 }
 
 function MisReservas() {
@@ -203,14 +198,14 @@ function MisReservas() {
                                 </div>
 
                                 <h3 className="reserva-fecha">
-                                    {formatDate(reserva.inicio)}
+                                    {formatDate(reserva.fecha)}
                                 </h3>
 
                                 <ul className="reserva-detalles">
 
                                     <li>
                                         <span>Hora</span>
-                                        <strong>{formatHora(reserva.inicio, reserva.fin)}</strong>
+                                        <strong>{reserva.horario}</strong>
                                     </li>
 
                                     <li>

@@ -93,7 +93,7 @@ function StepTwo({ data, updateData, error, disponibilidad }) {
                 <div className="time-slots">
 
                     {timeSlots.map((slot) => {
-                        const ocupado = ocupadoTimes.has(slot.inicio);
+                        const ocupado = ocupadoTimes.has(slot.value);
                         const esSeleccionado = data.time === slot.value;
 
                         const clases = [

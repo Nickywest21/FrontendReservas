@@ -177,11 +177,11 @@ function StepFour({ data, sala, onConfirm, error }) {
                     </div>
 
                     <h1 className="success-title">
-                        ¡Reserva confirmada!
+                        ¡Reserva exitosa!
                     </h1>
 
                     <p className="success-text">
-                        Gracias, por elegirnos. Tu reserva está lista.
+                        Tu reserva se guardó correctamente.
                     </p>
                 </div>
             )}

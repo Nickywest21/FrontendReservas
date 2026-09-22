@@ -34,6 +34,10 @@ function StepThree({ data, updateData, error }) {
                     }
                 />
 
+                <p className="step-hint">
+                    Mínimo 3 letras.
+                </p>
+
             </div>
 
             <div className="form-group">
@@ -50,6 +54,10 @@ function StepThree({ data, updateData, error }) {
                         updateData("email", e.target.value)
                     }
                 />
+
+                <p className="step-hint">
+                    Debe ser un correo válido (ej. correo@ejemplo.com).
+                </p>
 
             </div>
 
@@ -68,6 +76,10 @@ function StepThree({ data, updateData, error }) {
                     }
                 />
 
+                <p className="step-hint">
+                    Exactamente 8 dígitos.
+                </p>
+
             </div>
 
             <div className="form-group">
@@ -84,6 +96,10 @@ function StepThree({ data, updateData, error }) {
                         updateData("motivo", e.target.value.slice(0, 200))
                     }
                 />
+
+                <p className="step-hint">
+                    Mínimo 3 caracteres.
+                </p>
 
             </div>
 

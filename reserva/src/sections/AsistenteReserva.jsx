@@ -8,7 +8,7 @@ import PasoTres from "../components/PasoTres";
 import PasoCuatro from "../components/PasoCuatro";
 
 import { createReservation, getReservations, getSalas } from "../servers/api";
-import { obtenerHora, salaPorSlug, slotConHora } from "../constants/laboratorios";
+import { salaPorSlug, slotConHora } from "../constants/laboratorios";
 
 import "../styles/AsistenteReserva.css";
 
@@ -117,7 +117,7 @@ function BookingWizard() {
                 }
 
                 const ocupadosTimes = new Set(
-                    reservas.map((r) => obtenerHora(r.inicio))
+                    reservas.map((r) => r.horario)
                 );
 
                 setDisponibilidad({
@@ -129,7 +129,7 @@ function BookingWizard() {
 
                 const slot = slotConHora(bookingData.time);
 
-                if (slot && ocupadosTimes.has(slot.inicio)) {
+                if (slot && ocupadosTimes.has(slot.value)) {
                     setBookingData((prev) => ({ ...prev, time: "" }));
                 }
             })
@@ -176,6 +176,10 @@ function BookingWizard() {
                     return "Ingresa tu nombre completo.";
                 }
 
+                if (bookingData.responsable.trim().length < 3) {
+                    return "El nombre debe tener al menos 3 letras.";
+                }
+
                 if (!/^[\p{L}\s]+$/u.test(bookingData.responsable)) {
                     return "El nombre solo puede contener letras.";
                 }
@@ -202,6 +206,10 @@ function BookingWizard() {
 
                 if (!bookingData.motivo) {
                     return "Ingresa el motivo de la reserva.";
+                }
+
+                if (bookingData.motivo.trim().length < 3) {
+                    return "El motivo debe tener al menos 3 caracteres.";
                 }
 
                 if (bookingData.motivo.length > 200) {
@@ -252,14 +260,9 @@ function BookingWizard() {
         try {
             setError("");
 
-            const slot = slotConHora(bookingData.time);
-
-            if (!slot) {
-                throw new Error("Selecciona una hora para continuar.");
+            if (!bookingData.date || !bookingData.time) {
+                throw new Error("Selecciona fecha y hora para continuar.");
             }
-
-            const inicio = new Date(`${bookingData.date}T${slot.inicio}:00`);
-            const fin = new Date(`${bookingData.date}T${slot.fin}:00`);
 
             await createReservation({
                 salaId: bookingData.salaId,
@@ -268,8 +271,8 @@ function BookingWizard() {
                 people: bookingData.people,
                 email: bookingData.email,
                 phone: bookingData.phone,
-                inicio: inicio.toISOString(),
-                fin: fin.toISOString()
+                fecha: bookingData.date,
+                horario: bookingData.time
             });
 
             setReservaConfirmada(true);
