@@ -1,8 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { labNames } from "../constants/laboratorios";
-
 import "../styles/Pasos.css";
 
 const CONFETTI_COLORS = [
@@ -38,7 +36,7 @@ function generateConfetti() {
 
 const confetti = generateConfetti();
 
-function StepFour({ data, onConfirm, error }) {
+function StepFour({ data, sala, onConfirm, error }) {
     const navigate = useNavigate();
 
     const [confirmed, setConfirmed] = useState(false);
@@ -82,7 +80,7 @@ function StepFour({ data, onConfirm, error }) {
 
                     <div className="summary">
                         <p>
-                            <strong>Servicio:</strong> {labNames[data.service] || data.service}
+                            <strong>Servicio:</strong> {sala ? sala.nombre : data.salaId}
                         </p>
 
                         <p>
@@ -98,7 +96,7 @@ function StepFour({ data, onConfirm, error }) {
                         </p>
 
                         <p>
-                            <strong>Nombre:</strong> {data.name}
+                            <strong>Nombre:</strong> {data.responsable}
                         </p>
 
                         <p>
@@ -107,6 +105,10 @@ function StepFour({ data, onConfirm, error }) {
 
                         <p>
                             <strong>Teléfono:</strong> {data.phone}
+                        </p>
+
+                        <p>
+                            <strong>Motivo:</strong> {data.motivo}
                         </p>
                     </div>
 

@@ -7,23 +7,19 @@ import PasoDos from "../components/PasoDos";
 import PasoTres from "../components/PasoTres";
 import PasoCuatro from "../components/PasoCuatro";
 
-import { createReservation, getReservations } from "../servers/api";
-import { labCapacities, labIds } from "../constants/laboratorios";
+import { createReservation, getReservations, getSalas } from "../servers/api";
+import { obtenerHora, salaPorSlug, slotConHora } from "../constants/laboratorios";
 
 import "../styles/AsistenteReserva.css";
-
-const obtenerInicio = (hora) => String(hora || "").split(" - ")[0];
 
 function BookingWizard() {
     const navigate = useNavigate();
     const [searchParams] = useSearchParams();
 
-    const servicioInicial =
-        labIds[searchParams.get("lab")] || "";
+    const labParam = searchParams.get("lab");
 
-    const personasIniciales = labCapacities[servicioInicial]
-        ? labCapacities[servicioInicial].min
-        : 1;
+    const [salas, setSalas] = useState([]);
+    const [salasError, setSalasError] = useState("");
 
     const [currentStep, setCurrentStep] = useState(1);
     const [error, setError] = useState("");
@@ -31,53 +27,109 @@ function BookingWizard() {
 
     const [disponibilidad, setDisponibilidad] = useState({
         date: null,
-        service: null,
+        salaId: null,
         times: new Set(),
         error: ""
     });
 
     const [bookingData, setBookingData] = useState({
-        service: servicioInicial,
+        salaId: "",
         date: "",
         time: "",
-        people: personasIniciales,
-        name: "",
+        people: 1,
+        responsable: "",
+        motivo: "",
         email: "",
         phone: ""
     });
 
+    const cargarSalas = async () => {
+        const data = await getSalas();
+
+        setSalas(data);
+
+        const salaInicial = salaPorSlug(data, labParam);
+
+        if (salaInicial) {
+            setBookingData((prev) => ({
+                ...prev,
+                salaId: salaInicial.id,
+                people: 1
+            }));
+        }
+    };
+
+    const reintentarSalas = () => {
+        setSalasError("");
+        setSalas([]);
+
+        cargarSalas().catch(() => {
+            setSalasError("No se pudieron cargar los laboratorios.");
+        });
+    };
+
     useEffect(() => {
-        if (!bookingData.date || !bookingData.service) {
+        let active = true;
+
+        getSalas()
+            .then((data) => {
+                if (!active) {
+                    return;
+                }
+
+                setSalas(data);
+
+                const salaInicial = salaPorSlug(data, labParam);
+
+                if (salaInicial) {
+                    setBookingData((prev) => ({
+                        ...prev,
+                        salaId: salaInicial.id,
+                        people: 1
+                    }));
+                }
+            })
+            .catch(() => {
+                if (active) {
+                    setSalasError("No se pudieron cargar los laboratorios.");
+                }
+            });
+
+        return () => {
+            active = false;
+        };
+    }, [labParam]);
+
+    useEffect(() => {
+        if (!bookingData.date || !bookingData.salaId) {
             return;
         }
 
         const fecha = bookingData.date;
-        const servicio = bookingData.service;
+        const salaId = bookingData.salaId;
 
         let active = true;
 
-        getReservations({ date: fecha, service: servicio })
+        getReservations({ fecha, salaId })
             .then((reservas) => {
                 if (!active) {
                     return;
                 }
 
                 const ocupadosTimes = new Set(
-                    reservas
-                        .filter((r) => r.date === fecha && r.service === servicio)
-                        .map((r) => obtenerInicio(r.time))
+                    reservas.map((r) => obtenerHora(r.inicio))
                 );
 
                 setDisponibilidad({
                     date: fecha,
-                    service: servicio,
+                    salaId,
                     times: ocupadosTimes,
                     error: ""
                 });
 
-                const tiempoActual = bookingData.time;
+                const slot = slotConHora(bookingData.time);
 
-                if (tiempoActual && ocupadosTimes.has(obtenerInicio(tiempoActual))) {
+                if (slot && ocupadosTimes.has(slot.inicio)) {
                     setBookingData((prev) => ({ ...prev, time: "" }));
                 }
             })
@@ -85,7 +137,7 @@ function BookingWizard() {
                 if (active) {
                     setDisponibilidad({
                         date: fecha,
-                        service: servicio,
+                        salaId,
                         times: new Set(),
                         error: "No se pudo verificar la disponibilidad de horarios."
                     });
@@ -95,13 +147,13 @@ function BookingWizard() {
         return () => {
             active = false;
         };
-    }, [bookingData.date, bookingData.service, bookingData.time]);
+    }, [bookingData.date, bookingData.salaId, bookingData.time]);
 
     const validateStep = (step) => {
         switch (step) {
             case 1:
-                if (!bookingData.service) {
-                    return "Selecciona un servicio para continuar.";
+                if (!bookingData.salaId) {
+                    return "Selecciona un laboratorio para continuar.";
                 }
                 break;
 
@@ -120,15 +172,15 @@ function BookingWizard() {
                 break;
 
             case 3:
-                if (!bookingData.name) {
+                if (!bookingData.responsable) {
                     return "Ingresa tu nombre completo.";
                 }
 
-                if (!/^[\p{L}\s]+$/u.test(bookingData.name)) {
+                if (!/^[\p{L}\s]+$/u.test(bookingData.responsable)) {
                     return "El nombre solo puede contener letras.";
                 }
 
-                if (bookingData.name.length > 50) {
+                if (bookingData.responsable.length > 50) {
                     return "El nombre no puede exceder los 50 caracteres.";
                 }
 
@@ -146,6 +198,14 @@ function BookingWizard() {
 
                 if (!/^\d{8}$/.test(bookingData.phone)) {
                     return "El teléfono debe contener 8 dígitos.";
+                }
+
+                if (!bookingData.motivo) {
+                    return "Ingresa el motivo de la reserva.";
+                }
+
+                if (bookingData.motivo.length > 200) {
+                    return "El motivo no puede exceder los 200 caracteres.";
                 }
                 break;
 
@@ -192,34 +252,56 @@ function BookingWizard() {
         try {
             setError("");
 
-            await createReservation(bookingData);
+            const slot = slotConHora(bookingData.time);
+
+            if (!slot) {
+                throw new Error("Selecciona una hora para continuar.");
+            }
+
+            const inicio = new Date(`${bookingData.date}T${slot.inicio}:00`);
+            const fin = new Date(`${bookingData.date}T${slot.fin}:00`);
+
+            await createReservation({
+                salaId: bookingData.salaId,
+                responsable: bookingData.responsable,
+                motivo: bookingData.motivo,
+                people: bookingData.people,
+                email: bookingData.email,
+                phone: bookingData.phone,
+                inicio: inicio.toISOString(),
+                fin: fin.toISOString()
+            });
 
             setReservaConfirmada(true);
 
             setBookingData({
-                service: "",
+                salaId: "",
                 date: "",
                 time: "",
                 people: 1,
-                name: "",
+                responsable: "",
+                motivo: "",
                 email: "",
                 phone: ""
             });
 
             setDisponibilidad({
                 date: null,
-                service: null,
+                salaId: null,
                 times: new Set(),
                 error: ""
             });
 
             return true;
-        } catch {
-            setError("No se pudo guardar la reserva, intenta de nuevo");
+        } catch (err) {
+            setError(err.message || "No se pudo guardar la reserva, intenta de nuevo");
 
             return false;
         }
     };
+
+    const salaSeleccionada =
+        salas.find((s) => String(s.id) === String(bookingData.salaId)) || null;
 
     return (
         <main className="booking-page">
@@ -231,6 +313,9 @@ function BookingWizard() {
 
                     {currentStep === 1 && (
                         <PasoUno
+                            salas={salas}
+                            salasError={salasError}
+                            onRetry={reintentarSalas}
                             data={bookingData}
                             updateData={updateData}
                             error={error}
@@ -257,6 +342,7 @@ function BookingWizard() {
                     {currentStep === 4 && (
                         <PasoCuatro
                             data={bookingData}
+                            sala={salaSeleccionada}
                             onConfirm={confirmarReserva}
                             error={error}
                         />

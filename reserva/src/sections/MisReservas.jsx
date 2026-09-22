@@ -1,23 +1,23 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { getReservations } from "../servers/api";
-import { labNames } from "../constants/laboratorios";
+import { getReservations, getSalas } from "../servers/api";
+import { obtenerHora } from "../constants/laboratorios";
 
 import "../styles/MisReservas.css";
 
-const labStyles = {
-    servicio1: { badge: "#10b981", bg: "rgba(16, 185, 129, 0.15)" },
-    servicio2: { badge: "#3b82f6", bg: "rgba(59, 130, 246, 0.15)" },
-    servicio3: { badge: "#8b5cf6", bg: "rgba(139, 92, 246, 0.15)" }
-};
+const labPalette = [
+    { badge: "#10b981", bg: "rgba(16, 185, 129, 0.15)" },
+    { badge: "#3b82f6", bg: "rgba(59, 130, 246, 0.15)" },
+    { badge: "#8b5cf6", bg: "rgba(139, 92, 246, 0.15)" }
+];
 
-function formatDate(date) {
-    if (!date) {
+function formatDate(iso) {
+    if (!iso) {
         return "";
     }
 
-    const [year, month, day] = date.split("-");
+    const [year, month, day] = String(iso).slice(0, 10).split("-");
 
     const fecha = new Date(year, month - 1, day);
 
@@ -29,10 +29,15 @@ function formatDate(date) {
     });
 }
 
+function formatHora(inicio, fin) {
+    return `${obtenerHora(inicio)} - ${obtenerHora(fin)}`;
+}
+
 function MisReservas() {
     const navigate = useNavigate();
 
     const [reservas, setReservas] = useState([]);
+    const [salas, setSalas] = useState([]);
     const [cargando, setCargando] = useState(true);
     const [error, setError] = useState("");
 
@@ -41,8 +46,13 @@ function MisReservas() {
         setError("");
 
         try {
-            const datos = await getReservations();
+            const [datos, salasDatos] = await Promise.all([
+                getReservations(),
+                getSalas()
+            ]);
+
             setReservas(datos);
+            setSalas(salasDatos);
         } catch {
             setError("No se pudieron cargar tus reservas.");
         } finally {
@@ -51,10 +61,32 @@ function MisReservas() {
     };
 
     useEffect(() => {
+        let active = true;
+
         getReservations()
-            .then(setReservas)
-            .catch(() => setError("No se pudieron cargar tus reservas."))
-            .finally(() => setCargando(false));
+            .then((datos) => getSalas().then((salasDatos) => ({ datos, salasDatos })))
+            .then(({ datos, salasDatos }) => {
+                if (!active) {
+                    return;
+                }
+
+                setReservas(datos);
+                setSalas(salasDatos);
+            })
+            .catch(() => {
+                if (active) {
+                    setError("No se pudieron cargar tus reservas.");
+                }
+            })
+            .finally(() => {
+                if (active) {
+                    setCargando(false);
+                }
+            });
+
+        return () => {
+            active = false;
+        };
     }, []);
 
     return (
@@ -135,8 +167,16 @@ function MisReservas() {
                 <section className="mis-reservas-lista">
 
                     {reservas.map((reserva, index) => {
-                        const estilo = labStyles[reserva.service]
-                            || { badge: "#118c8c", bg: "rgba(17, 140, 140, 0.15)" };
+                        const sala = salas.find(
+                            (s) => String(s.id) === String(reserva.salaId)
+                        );
+
+                        const nombreSala = sala
+                            ? sala.nombre
+                            : (reserva.sala?.nombre || reserva.salaId || "Laboratorio");
+
+                        const estilo = labPalette[Number(reserva.salaId) % labPalette.length]
+                            || labPalette[0];
 
                         return (
                             <article
@@ -153,7 +193,7 @@ function MisReservas() {
                                             backgroundColor: estilo.bg
                                         }}
                                     >
-                                        {labNames[reserva.service] || reserva.service}
+                                        {nombreSala}
                                     </span>
 
                                     <span className="reserva-estado">
@@ -163,14 +203,14 @@ function MisReservas() {
                                 </div>
 
                                 <h3 className="reserva-fecha">
-                                    {formatDate(reserva.date)}
+                                    {formatDate(reserva.inicio)}
                                 </h3>
 
                                 <ul className="reserva-detalles">
 
                                     <li>
                                         <span>Hora</span>
-                                        <strong>{reserva.time}</strong>
+                                        <strong>{formatHora(reserva.inicio, reserva.fin)}</strong>
                                     </li>
 
                                     <li>
@@ -179,8 +219,13 @@ function MisReservas() {
                                     </li>
 
                                     <li>
-                                        <span>Nombre</span>
-                                        <strong>{reserva.name}</strong>
+                                        <span>Responsable</span>
+                                        <strong>{reserva.responsable}</strong>
+                                    </li>
+
+                                    <li>
+                                        <span>Motivo</span>
+                                        <strong>{reserva.motivo}</strong>
                                     </li>
 
                                     <li>

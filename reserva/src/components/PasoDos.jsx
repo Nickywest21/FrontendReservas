@@ -1,12 +1,8 @@
 import { useState } from "react";
 
-import "../styles/Pasos.css";
+import { timeSlots } from "../constants/laboratorios";
 
-const timeSlots = [
-    { value: "08:00 - 10:00", start: "08:00" },
-    { value: "11:00 - 13:00", start: "11:00" },
-    { value: "15:00 - 17:00", start: "15:00" }
-];
+import "../styles/Pasos.css";
 
 function StepTwo({ data, updateData, error, disponibilidad }) {
     const [fechaError, setFechaError] = useState("");
@@ -36,14 +32,14 @@ function StepTwo({ data, updateData, error, disponibilidad }) {
 
     const coinciden =
         data.date === disponibilidad.date &&
-        data.service === disponibilidad.service;
+        String(data.salaId) === String(disponibilidad.salaId);
 
     const ocupadoTimes =
         coinciden && disponibilidad.times instanceof Set
             ? disponibilidad.times
             : new Set();
 
-    const verificando = Boolean(data.date && data.service && !coinciden);
+    const verificando = Boolean(data.date && data.salaId && !coinciden);
     const errorDisponibilidad = coinciden ? disponibilidad.error : "";
     const sinHorarios = coinciden && ocupadoTimes.size === timeSlots.length;
 
@@ -97,7 +93,7 @@ function StepTwo({ data, updateData, error, disponibilidad }) {
                 <div className="time-slots">
 
                     {timeSlots.map((slot) => {
-                        const ocupado = ocupadoTimes.has(slot.start);
+                        const ocupado = ocupadoTimes.has(slot.inicio);
                         const esSeleccionado = data.time === slot.value;
 
                         const clases = [

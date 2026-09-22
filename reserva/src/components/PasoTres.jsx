@@ -3,7 +3,7 @@ import "../styles/Pasos.css";
 function StepThree({ data, updateData, error }) {
 
     const handleNameChange = (value) => {
-        updateData("name", value.replace(/[^\p{L}\s]/gu, "").slice(0, 50));
+        updateData("responsable", value.replace(/[^\p{L}\s]/gu, "").slice(0, 50));
     };
 
     const handlePhoneChange = (value) => {
@@ -28,7 +28,7 @@ function StepThree({ data, updateData, error }) {
                 <input
                     type="text"
                     placeholder="Nombre completo"
-                    value={data.name}
+                    value={data.responsable}
                     onChange={(e) =>
                         handleNameChange(e.target.value)
                     }
@@ -65,6 +65,23 @@ function StepThree({ data, updateData, error }) {
                     value={data.phone}
                     onChange={(e) =>
                         handlePhoneChange(e.target.value)
+                    }
+                />
+
+            </div>
+
+            <div className="form-group">
+
+                <label>
+                    Motivo de la reserva
+                </label>
+
+                <input
+                    type="text"
+                    placeholder="Ej. Práctica de laboratorio"
+                    value={data.motivo}
+                    onChange={(e) =>
+                        updateData("motivo", e.target.value.slice(0, 200))
                     }
                 />
 

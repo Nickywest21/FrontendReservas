@@ -43,6 +43,36 @@
     margin: 16px 0 20px;
 }
 
+.btn-reintentar {
+    display: inline-block;
+    margin-top: -4px;
+    background: none;
+    color: #118c8c;
+    border: 1px solid #118c8c;
+    border-radius: 8px;
+    padding: 8px 20px;
+    cursor: pointer;
+    font-size: 14px;
+    transition:
+        background-color 0.2s ease,
+        color 0.2s ease;
+}
+
+.btn-reintentar:hover {
+    background: #118c8c;
+    color: #fff;
+}
+
+body.modo-oscuro .btn-reintentar {
+    color: #f2bb16;
+    border-color: #f2bb16;
+}
+
+body.modo-oscuro .btn-reintentar:hover {
+    background: #f2bb16;
+    color: #082a2b;
+}
+
 .step-hint {
     margin: 0;
     font-size: 13px;

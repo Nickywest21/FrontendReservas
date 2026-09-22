@@ -1,14 +1,26 @@
-export const API_BASE_URL = "http://localhost:3000/api";
+export const API_BASE_URL = "http://localhost:3010/api";
 
-export async function getReservations({ date, service } = {}) {
-    const params = new URLSearchParams();
+export async function getSalas() {
+    const response = await fetch(`${API_BASE_URL}/salas`);
 
-    if (date) {
-        params.set("date", date);
+    if (!response.ok) {
+        throw new Error(`Error al obtener los laboratorios (${response.status})`);
     }
 
-    if (service) {
-        params.set("service", service);
+    const json = await response.json();
+
+    return Array.isArray(json) ? json : json.data ?? [];
+}
+
+export async function getReservations({ fecha, salaId } = {}) {
+    const params = new URLSearchParams();
+
+    if (fecha) {
+        params.set("fecha", fecha);
+    }
+
+    if (salaId) {
+        params.set("salaId", salaId);
     }
 
     const query = params.toString();
@@ -34,6 +46,14 @@ export async function createReservation(reservation) {
         },
         body: JSON.stringify(reservation)
     });
+
+    if (response.status === 409) {
+        const json = await response.json().catch(() => ({}));
+
+        throw new Error(
+            json.message || "Ese horario ya está reservado. Intenta con otro."
+        );
+    }
 
     if (!response.ok) {
         throw new Error(`Error al guardar la reserva (${response.status})`);

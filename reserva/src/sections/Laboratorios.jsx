@@ -4,59 +4,62 @@ import { useNavigate } from "react-router-dom";
 import "../styles/Laboratorios.css";
 
 const imagesByLab = {
-    quimica: [
-        "/img1_Quimica.jpg",
-        "/img2_Quimica.jpg",
-        "/img3_Quimica.jpg"
+    redes: [
+        "/img1_Redes.jpg",
+        "/img2_Redes.jpg",
+        "/img3_Redes.jpg"
     ],
-    fisica: [
-        "/img1_Física.jpg",
-        "/img2_Física.jpg",
-        "/img3_Física.jpg"
+    software: [
+        "/img1_Software.jpg",
+        "/img2_Software.jpg",
+        "/img3_Software.jpg"
     ],
-    computacion: [
-        "/img3_Compu.jpg",
-        "/img2_Compu.jpg",
-        "/img1_Compu.jpg"
+    hardware: [
+        "/img3_Hardware.jpg",
+        "/img2_Hardware.jpg",
+        "/img1_Hardware.jpg"
     ]
 };
 
 const laboratories = [
     {
-        id: "quimica",
-        name: "Laboratorio de Química",
-        description: "Espacio equipado para análisis, ensayos y prácticas químicas con instrumentación moderna.",
+        id: "redes",
+        name: "Lab A · Redes",
+        edificio: "M",
+        capacity: 30,
+        description: "Espacio equipado para prácticas de redes, cableado estructurado y comunicaciones.",
         offers: [
-            "Análisis químico",
-            "Material de vidrio",
-            "Control de temperatura"
+            "Configuración de redes",
+            "Cableado estructurado",
+            "Simulación de redes"
         ],
-        capacity: "6 a 12 personas",
-        images: imagesByLab.quimica
+        images: imagesByLab.redes
     },
     {
-        id: "fisica",
-        name: "Laboratorio de Física",
-        description: "Área para experimentos de mecánica, electricidad y óptica con equipos de medición de precisión.",
+        id: "software",
+        name: "Lab B · Software",
+        edificio: "M",
+        capacity: 25,
+        description: "Área para desarrollo de software, programación y pruebas de aplicaciones.",
         offers: [
-            "Óptica y electricidad",
-            "Medición de precisión",
-            "Equipos mecánicos"
+            "Desarrollo de software",
+            "Programación",
+            "Pruebas y QA"
         ],
-        capacity: "8 a 15 personas",
-        images: imagesByLab.fisica
+        images: imagesByLab.software
     },
     {
-        id: "computacion",
-        name: "Laboratorio de Computación",
-        description: "Espacio equipado con equipos de cómputo, software especializado y conectividad para prácticas y proyectos.",
+        id: "hardware",
+        name: "Lab C · Hardware",
+        edificio: "O",
+        capacity: 20,
+        description: "Laboratorio para montaje, mantenimiento y diagnóstico de equipos de cómputo.",
         offers: [
-            "Equipos de cómputo",
-            "Software especializado",
-            "Redes y conectividad"
+            "Montaje de equipos",
+            "Electrónica básica",
+            "Diagnóstico de hardware"
         ],
-        capacity: "10 a 20 personas",
-        images: imagesByLab.computacion
+        images: imagesByLab.hardware
     }
 ];
 
@@ -171,15 +174,29 @@ function Laboratorios() {
                                     </div>
                                 </button>
 
-                                <span className="lab-capacity">
+                                <div className="lab-meta">
 
-                                    <svg className="capacity-icon" viewBox="0 0 24 24" fill="currentColor">
-                                        <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
-                                    </svg>
+                                    <span className="lab-edificio">
 
-                                    {lab.capacity}
+                                        <svg className="edificio-icon" viewBox="0 0 24 24" fill="currentColor">
+                                            <path d="M12 7V3H2v18h20V7H12zm-6 12H4v-2h2v2zm0-4H4v-2h2v2zm0-4H4V9h2v2zm0-4H4V5h2v2zm4 12H8v-2h2v2zm0-4H8v-2h2v2zm0-4H8V9h2v2zm0-4H8V5h2v2zm10 12h-8v-2h2v-2h-2v-2h2v-2h-2V9h8v10zm-2-8h-2v2h2v-2zm0 4h-2v2h2v-2z" />
+                                        </svg>
 
-                                </span>
+                                        Edificio {lab.edificio}
+
+                                    </span>
+
+                                    <span className="lab-capacity">
+
+                                        <svg className="capacity-icon" viewBox="0 0 24 24" fill="currentColor">
+                                            <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
+                                        </svg>
+
+                                        {lab.capacity} personas
+
+                                    </span>
+
+                                </div>
 
                             </div>
 

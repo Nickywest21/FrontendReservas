@@ -1,26 +1,24 @@
 import "../styles/Pasos.css";
 
-import { labCapacities } from "../constants/laboratorios";
+function StepOne({ salas, salasError, onRetry, data, updateData, error }) {
 
-function StepOne({ data, updateData, error }) {
+    const sala = salas.find((s) => String(s.id) === String(data.salaId));
 
-    const capacity = data.service
-        ? labCapacities[data.service]
-        : null;
+    const handleSalaChange = (value) => {
+        updateData("salaId", value);
 
-    const handleServiceChange = (value) => {
-        updateData("service", value);
+        const seleccionada = salas.find((s) => String(s.id) === String(value));
 
-        if (labCapacities[value]) {
-            updateData("people", labCapacities[value].min);
+        if (seleccionada) {
+            updateData("people", 1);
         }
     };
 
     const handlePeopleChange = (value) => {
-        if (capacity) {
+        if (sala) {
             const numericValue = Math.max(
-                capacity.min,
-                Math.min(capacity.max, Number(value || capacity.min))
+                1,
+                Math.min(sala.capacidad, Number(value || 1))
             );
 
             updateData("people", numericValue);
@@ -39,61 +37,87 @@ function StepOne({ data, updateData, error }) {
                 Selecciona el laboratorio que deseas reservar.
             </p>
 
-            <div className="form-group">
+            {salasError && (
+                <p className="step-error">
+                    {salasError}
+                </p>
+            )}
 
-                <label>
-                    Laboratorio
-                </label>
-
-                <select
-                    value={data.service}
-                    onChange={(e) =>
-                        handleServiceChange(e.target.value)
-                    }
+            {salasError && onRetry && (
+                <button
+                    type="button"
+                    className="btn-reintentar"
+                    onClick={onRetry}
                 >
-                    <option value="">
-                        Selecciona un laboratorio
-                    </option>
+                    Reintentar
+                </button>
+            )}
 
-                    <option value="servicio1">
-                        Laboratorio de química
-                    </option>
+            {!salasError && salas.length === 0 && (
+                <p className="step-hint">
+                    Cargando laboratorios...
+                </p>
+            )}
 
-                    <option value="servicio2">
-                        Laboratorio de física
-                    </option>
+            {!salasError && salas.length > 0 && (
+                <>
 
-                    <option value="servicio3">
-                        Laboratorio de computación
-                    </option>
+                    <div className="form-group">
 
-                </select>
+                        <label>
+                            Laboratorio
+                        </label>
 
-            </div>
+                        <select
+                            value={data.salaId}
+                            onChange={(e) =>
+                                handleSalaChange(e.target.value)
+                            }
+                        >
+                            <option value="">
+                                Selecciona un laboratorio
+                            </option>
 
-            <div className="form-group">
+                            {salas.map((salaItem) => (
+                                <option
+                                    key={salaItem.id}
+                                    value={salaItem.id}
+                                >
+                                    {salaItem.nombre}
+                                </option>
+                            ))}
 
-                <label>
-                    Número de personas
-                </label>
+                        </select>
 
-                <input
-                    type="number"
-                    min={capacity ? capacity.min : 1}
-                    max={capacity ? capacity.max : undefined}
-                    value={data.people}
-                    onChange={(e) =>
-                        handlePeopleChange(e.target.value)
-                    }
-                />
+                    </div>
 
-                {capacity && (
-                    <p className="step-hint">
-                        Capacidad del laboratorio: {capacity.min} a {capacity.max} personas
-                    </p>
-                )}
+                    <div className="form-group">
 
-            </div>
+                        <label>
+                            Número de personas
+                        </label>
+
+                        <input
+                            type="number"
+                            min={1}
+                            max={sala ? sala.capacidad : undefined}
+                            value={data.people}
+                            onChange={(e) =>
+                                handlePeopleChange(e.target.value)
+                            }
+                        />
+
+                        {sala && (
+                            <p className="step-hint">
+                                Capacidad del laboratorio: hasta {sala.capacidad} personas
+                                {sala.edificio ? ` (${sala.edificio})` : ""}
+                            </p>
+                        )}
+
+                    </div>
+
+                </>
+            )}
 
             {error && (
                 <p className="step-error">

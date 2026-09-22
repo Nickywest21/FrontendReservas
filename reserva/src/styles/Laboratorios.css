@@ -272,6 +272,31 @@
     gap: 15px;
 }
 
+.lab-meta {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.lab-edificio {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    background: #f5f5f5;
+    color: #555;
+    border-radius: 20px;
+    padding: 8px 14px;
+    font-size: 13px;
+}
+
+.edificio-icon {
+    width: 18px;
+    height: 18px;
+    color: #118c8c;
+}
+
 .lab-capacity {
     display: flex;
     align-items: center;
@@ -380,7 +405,16 @@ body.modo-oscuro .lab-capacity {
     color: #8fb1b1;
 }
 
+body.modo-oscuro .lab-edificio {
+    background: #082a2b;
+    color: #8fb1b1;
+}
+
 body.modo-oscuro .capacity-icon {
+    color: #f2bb16;
+}
+
+body.modo-oscuro .edificio-icon {
     color: #f2bb16;
 }
 
