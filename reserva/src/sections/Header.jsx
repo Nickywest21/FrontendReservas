@@ -91,6 +91,19 @@ function Header() {
 
 
           <NavLink
+            to="/mis-reservas"
+            className={({ isActive }) =>
+              isActive
+                ? "header-link activo"
+                : "header-link"
+            }
+            onClick={cerrarMenu}
+          >
+            Mis reservas
+          </NavLink>
+
+
+          <NavLink
             to="/contacto"
             className={({ isActive }) =>
               isActive

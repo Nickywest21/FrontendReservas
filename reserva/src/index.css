@@ -19,3 +19,159 @@ input,
 select {
     font-family: inherit;
 }
+
+/* ========================================
+   ERROR BOUNDARY
+======================================== */
+
+.error-boundary {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    padding: 40px 20px;
+    text-align: center;
+    background-color: #f8fbfa;
+    color: #333333;
+}
+
+.error-boundary-icon {
+    font-size: 52px;
+}
+
+.error-boundary h1 {
+    margin: 0;
+    color: #118c8c;
+}
+
+.error-boundary p {
+    margin: 0 0 12px;
+    color: #555555;
+}
+
+.error-boundary-btn {
+    min-height: 46px;
+    padding: 0 28px;
+    border: none;
+    border-radius: 10px;
+    background-color: #f2bb16;
+    color: #172020;
+    font-family: inherit;
+    font-size: 0.95rem;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 7px 18px rgba(242, 187, 22, 0.22);
+    transition:
+        transform 0.25s ease,
+        background-color 0.25s ease,
+        color 0.25s ease,
+        box-shadow 0.25s ease;
+}
+
+.error-boundary-btn:hover {
+    transform: translateY(-3px);
+    background-color: #118c8c;
+    color: #ffffff;
+}
+
+body.modo-oscuro .error-boundary {
+    background-color: #071f20;
+    color: #ffffff;
+}
+
+body.modo-oscuro .error-boundary h1 {
+    color: #f2bb16;
+}
+
+body.modo-oscuro .error-boundary p {
+    color: #c8dddd;
+}
+
+/* ========================================
+   LOADER (From Uiverse.io by SchawnnahJ)
+======================================== */
+
+.loader {
+    position: relative;
+    width: 2.5em;
+    height: 2.5em;
+    transform: rotate(165deg);
+    font-size: 16px;
+    flex-shrink: 0;
+}
+
+.loader--sm {
+    font-size: 10px;
+}
+
+.loader:before,
+.loader:after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    display: block;
+    width: 0.5em;
+    height: 0.5em;
+    border-radius: 0.25em;
+    transform: translate(-50%, -50%);
+}
+
+.loader:before {
+    animation: before8 2s infinite;
+}
+
+.loader:after {
+    animation: after6 2s infinite;
+}
+
+@keyframes before8 {
+    0% {
+        width: 0.5em;
+        box-shadow: 1em -0.5em rgba(225, 20, 98, 0.75), -1em 0.5em rgba(111, 202, 220, 0.75);
+    }
+
+    35% {
+        width: 2.5em;
+        box-shadow: 0 -0.5em rgba(225, 20, 98, 0.75), 0 0.5em rgba(111, 202, 220, 0.75);
+    }
+
+    70% {
+        width: 0.5em;
+        box-shadow: -1em -0.5em rgba(225, 20, 98, 0.75), 1em 0.5em rgba(111, 202, 220, 0.75);
+    }
+
+    100% {
+        box-shadow: 1em -0.5em rgba(225, 20, 98, 0.75), -1em 0.5em rgba(111, 202, 220, 0.75);
+    }
+}
+
+@keyframes after6 {
+    0% {
+        height: 0.5em;
+        box-shadow: 0.5em 1em rgba(61, 184, 143, 0.75), -0.5em -1em rgba(233, 169, 32, 0.75);
+    }
+
+    35% {
+        height: 2.5em;
+        box-shadow: 0.5em 0 rgba(61, 184, 143, 0.75), -0.5em 0 rgba(233, 169, 32, 0.75);
+    }
+
+    70% {
+        height: 0.5em;
+        box-shadow: 0.5em -1em rgba(61, 184, 143, 0.75), -0.5em 1em rgba(233, 169, 32, 0.75);
+    }
+
+    100% {
+        box-shadow: 0.5em 1em rgba(61, 184, 143, 0.75), -0.5em -1em rgba(233, 169, 32, 0.75);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .loader:before,
+    .loader:after {
+        animation: none;
+    }
+}

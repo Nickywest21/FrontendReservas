@@ -1,28 +1,71 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 import "../styles/Pasos.css";
 
-const confetti = [
-    { x: -90, y: -60, rotate: 120, delay: 0, color: "#4caf50" },
-    { x: 90, y: -70, rotate: -90, delay: 0.1, color: "#f44336" },
-    { x: -60, y: -120, rotate: 200, delay: 0.2, color: "#2196f3" },
-    { x: 70, y: -130, rotate: -160, delay: 0.15, color: "#ff9800" },
-    { x: -140, y: -30, rotate: 90, delay: 0.25, color: "#e91e63" },
-    { x: 140, y: -20, rotate: -50, delay: 0.3, color: "#ffeb3b" },
-    { x: -80, y: -160, rotate: 70, delay: 0.35, color: "#9c27b0" },
-    { x: 90, y: -160, rotate: -220, delay: 0.4, color: "#00bcd4" },
-    { x: -170, y: -80, rotate: 140, delay: 0.45, color: "#4caf50" },
-    { x: 170, y: -90, rotate: -120, delay: 0.5, color: "#f44336" },
-    { x: -30, y: -190, rotate: 110, delay: 0.55, color: "#2196f3" },
-    { x: 40, y: -195, rotate: -80, delay: 0.6, color: "#ff9800" }
+const CONFETTI_COLORS = [
+    "#4caf50", "#f44336", "#2196f3", "#ff9800",
+    "#e91e63", "#ffeb3b", "#9c27b0", "#00bcd4"
 ];
 
-function StepFour({ data, onConfirm }) {
-    const [confirmed, setConfirmed] = useState(false);
+function generateConfetti() {
+    const pieces = [];
 
-    const confirmarReserva = () => {
-        setConfirmed(true);
-        onConfirm();
+    for (let i = 0; i < 30; i++) {
+        const angle = (i / 30) * Math.PI;
+        const reach = 70 + (i % 7) * 20;
+        const circle = i % 4 === 0;
+
+        pieces.push({
+            x: Math.round(Math.cos(angle) * reach),
+            y: Math.round(-(Math.sin(angle) * reach)),
+            fall: 340 + (i % 5) * 60,
+            drift: (i % 3 === 0 ? 1 : -1) * (30 + (i % 4) * 35),
+            rotate: (i * 97) % 360,
+            rotateEnd: (i * 137 + 540) % 720,
+            delay: (i % 6) * 0.08,
+            color: CONFETTI_COLORS[i % CONFETTI_COLORS.length],
+            width: circle ? 9 : 7 + (i % 3) * 3,
+            height: circle ? 9 : 12 + (i % 4) * 3,
+            circle
+        });
+    }
+
+    return pieces;
+}
+
+const confetti = generateConfetti();
+
+function StepFour({ data, sala, onConfirm, error }) {
+    const navigate = useNavigate();
+
+    const [confirmed, setConfirmed] = useState(false);
+    const [guardando, setGuardando] = useState(false);
+
+    const redireccionTimer = useRef(null);
+
+    useEffect(() => {
+        return () => {
+            if (redireccionTimer.current) {
+                clearTimeout(redireccionTimer.current);
+            }
+        };
+    }, []);
+
+    const confirmarReserva = async () => {
+        setGuardando(true);
+
+        const success = await onConfirm();
+
+        setGuardando(false);
+
+        if (success) {
+            setConfirmed(true);
+
+            redireccionTimer.current = setTimeout(() => {
+                navigate("/mis-reservas");
+            }, 2000);
+        }
     };
 
     return (
@@ -37,7 +80,7 @@ function StepFour({ data, onConfirm }) {
 
                     <div className="summary">
                         <p>
-                            <strong>Servicio:</strong> {data.service}
+                            <strong>Servicio:</strong> {sala ? sala.nombre : data.salaId}
                         </p>
 
                         <p>
@@ -53,7 +96,7 @@ function StepFour({ data, onConfirm }) {
                         </p>
 
                         <p>
-                            <strong>Nombre:</strong> {data.name}
+                            <strong>Nombre:</strong> {data.responsable}
                         </p>
 
                         <p>
@@ -63,14 +106,25 @@ function StepFour({ data, onConfirm }) {
                         <p>
                             <strong>Teléfono:</strong> {data.phone}
                         </p>
+
+                        <p>
+                            <strong>Motivo:</strong> {data.motivo}
+                        </p>
                     </div>
 
                     <button
                         className="btn-confirm"
                         onClick={confirmarReserva}
+                        disabled={guardando}
                     >
-                        Confirmar reserva
+                        {guardando ? "Guardando..." : "Confirmar reserva"}
                     </button>
+
+                    {error && (
+                        <p className="step-error">
+                            {error}
+                        </p>
+                    )}
                 </>
             ) : (
                 <div className="confirmation">
@@ -80,17 +134,25 @@ function StepFour({ data, onConfirm }) {
                                 key={index}
                                 className="confetti-piece"
                                 style={{
+                                    width: piece.width,
+                                    height: piece.height,
+                                    background: piece.color,
+                                    borderRadius: piece.circle ? "50%" : "2px",
                                     "--confetti-x": `${piece.x}px`,
                                     "--confetti-y": `${piece.y}px`,
+                                    "--confetti-fall": `${piece.fall}px`,
+                                    "--confetti-drift": `${piece.drift}px`,
                                     "--confetti-rotate": `${piece.rotate}deg`,
-                                    "--confetti-delay": `${piece.delay}s`,
-                                    background: piece.color
+                                    "--confetti-rotate-end": `${piece.rotateEnd}deg`,
+                                    "--confetti-delay": `${piece.delay}s`
                                 }}
                             />
                         ))}
                     </div>
 
                     <div className="success-animation">
+                        <div className="success-rays"></div>
+
                         <div className="success-ring"></div>
 
                         <div className="success-circle">
@@ -115,11 +177,11 @@ function StepFour({ data, onConfirm }) {
                     </div>
 
                     <h1 className="success-title">
-                        ¡Reserva confirmada!
+                        ¡Reserva exitosa!
                     </h1>
 
                     <p className="success-text">
-                        Gracias, por elegirnos. Tu reserva está lista.
+                        Tu reserva se guardó correctamente.
                     </p>
                 </div>
             )}

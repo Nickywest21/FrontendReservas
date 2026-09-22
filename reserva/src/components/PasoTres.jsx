@@ -2,6 +2,14 @@ import "../styles/Pasos.css";
 
 function StepThree({ data, updateData, error }) {
 
+    const handleNameChange = (value) => {
+        updateData("responsable", value.replace(/[^\p{L}\s]/gu, "").slice(0, 50));
+    };
+
+    const handlePhoneChange = (value) => {
+        updateData("phone", value.replace(/\D/g, "").slice(0, 8));
+    };
+
     return (
         <div className="step">
 
@@ -20,11 +28,15 @@ function StepThree({ data, updateData, error }) {
                 <input
                     type="text"
                     placeholder="Nombre completo"
-                    value={data.name}
+                    value={data.responsable}
                     onChange={(e) =>
-                        updateData("name", e.target.value)
+                        handleNameChange(e.target.value)
                     }
                 />
+
+                <p className="step-hint">
+                    Mínimo 3 letras.
+                </p>
 
             </div>
 
@@ -43,6 +55,10 @@ function StepThree({ data, updateData, error }) {
                     }
                 />
 
+                <p className="step-hint">
+                    Debe ser un correo válido (ej. correo@ejemplo.com).
+                </p>
+
             </div>
 
             <div className="form-group">
@@ -56,9 +72,34 @@ function StepThree({ data, updateData, error }) {
                     placeholder="0000-0000"
                     value={data.phone}
                     onChange={(e) =>
-                        updateData("phone", e.target.value)
+                        handlePhoneChange(e.target.value)
                     }
                 />
+
+                <p className="step-hint">
+                    Exactamente 8 dígitos.
+                </p>
+
+            </div>
+
+            <div className="form-group">
+
+                <label>
+                    Motivo de la reserva
+                </label>
+
+                <input
+                    type="text"
+                    placeholder="Ej. Práctica de laboratorio"
+                    value={data.motivo}
+                    onChange={(e) =>
+                        updateData("motivo", e.target.value.slice(0, 200))
+                    }
+                />
+
+                <p className="step-hint">
+                    Mínimo 3 caracteres.
+                </p>
 
             </div>
 
