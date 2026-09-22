@@ -154,6 +154,14 @@
         0 10px 22px rgba(17, 140, 140, 0.25);
 }
 
+.btn-confirm:disabled {
+    background-color: #bad9ce;
+    color: #118c8c;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
 /* ========================================
    MODO OSCURO
 ======================================== */
