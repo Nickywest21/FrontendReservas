@@ -42,8 +42,8 @@ function MisReservas() {
 
         try {
             const [datos, salasDatos] = await Promise.all([
-                getReservations(),
-                getSalas()
+                getReservations(), // get Reservations() es una función que obtiene la lista de reservas desde la API
+                getSalas() // get Salas() es una función que obtiene la lista de laboratorios desde la API
             ]);
 
             setReservas(datos);

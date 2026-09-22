@@ -44,7 +44,7 @@ function BookingWizard() {
     });
 
     const cargarSalas = async () => {
-        const data = await getSalas();
+        const data = await getSalas(); //get Salas() es una función que obtiene la lista de laboratorios desde la API
 
         setSalas(data);
 
