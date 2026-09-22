@@ -1,0 +1,116 @@
+import "../styles/Pasos.css";
+
+function StepThree({ data, updateData, error }) {
+
+    const handleNameChange = (value) => {
+        updateData("responsable", value.replace(/[^\p{L}\s]/gu, "").slice(0, 50));
+    };
+
+    const handlePhoneChange = (value) => {
+        updateData("phone", value.replace(/\D/g, "").slice(0, 8));
+    };
+
+    return (
+        <div className="step">
+
+            <h1>Tus datos</h1>
+
+            <p className="step-description">
+                Ingresa tus datos para completar la reserva.
+            </p>
+
+            <div className="form-group">
+
+                <label>
+                    Nombre completo
+                </label>
+
+                <input
+                    type="text"
+                    placeholder="Nombre completo"
+                    value={data.responsable}
+                    onChange={(e) =>
+                        handleNameChange(e.target.value)
+                    }
+                />
+
+                <p className="step-hint">
+                    Mínimo 3 letras.
+                </p>
+
+            </div>
+
+            <div className="form-group">
+
+                <label>
+                    Correo electrónico
+                </label>
+
+                <input
+                    type="email"
+                    placeholder="correo@ejemplo.com"
+                    value={data.email}
+                    onChange={(e) =>
+                        updateData("email", e.target.value)
+                    }
+                />
+
+                <p className="step-hint">
+                    Debe ser un correo válido (ej. correo@ejemplo.com).
+                </p>
+
+            </div>
+
+            <div className="form-group">
+
+                <label>
+                    Teléfono
+                </label>
+
+                <input
+                    type="tel"
+                    placeholder="0000-0000"
+                    value={data.phone}
+                    onChange={(e) =>
+                        handlePhoneChange(e.target.value)
+                    }
+                />
+
+                <p className="step-hint">
+                    Exactamente 8 dígitos.
+                </p>
+
+            </div>
+
+            <div className="form-group">
+
+                <label>
+                    Motivo de la reserva
+                </label>
+
+                <input
+                    type="text"
+                    placeholder="Ej. Práctica de laboratorio"
+                    value={data.motivo}
+                    onChange={(e) =>
+                        updateData("motivo", e.target.value.slice(0, 200))
+                    }
+                />
+
+                <p className="step-hint">
+                    Mínimo 3 caracteres.
+                </p>
+
+            </div>
+
+            {error && (
+                <p className="step-error">
+                    {error}
+                </p>
+            )}
+
+        </div>
+    );
+}
+
+export default StepThree;

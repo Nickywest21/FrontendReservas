@@ -1,0 +1,577 @@
+/* ========================================
+   INICIO
+======================================== */
+
+.inicio {
+  width: 100%;
+  overflow: hidden;
+  background-color: #ffffff;
+  color: #333333;
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
+}
+
+/* ========================================
+   HERO
+======================================== */
+
+.inicio-hero {
+  position: relative;
+  min-height: 70vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 90px 20px;
+  overflow: hidden;
+  background:
+    radial-gradient(
+      circle at 15% 20%,
+      rgba(186, 217, 206, 0.9),
+      transparent 35%
+    ),
+    radial-gradient(
+      circle at 85% 80%,
+      rgba(242, 187, 22, 0.3),
+      transparent 30%
+    ),
+    linear-gradient(
+      135deg,
+      #ffffff 0%,
+      #e9f5f1 50%,
+      #bad9ce 100%
+    );
+  transition: background 0.4s ease;
+}
+
+/* ========================================
+   DECORACIÓN DEL HERO
+======================================== */
+
+.inicio-hero::before {
+  content: "";
+  position: absolute;
+  width: 350px;
+  height: 350px;
+  top: -150px;
+  left: -100px;
+  border-radius: 50%;
+  background-color: rgba(17, 140, 140, 0.12);
+  filter: blur(5px);
+}
+
+.inicio-hero::after {
+  content: "";
+  position: absolute;
+  width: 300px;
+  height: 300px;
+  right: -100px;
+  bottom: -120px;
+  border-radius: 50%;
+  background-color: rgba(242, 187, 22, 0.15);
+  filter: blur(5px);
+}
+
+/* ========================================
+   CONTENIDO
+======================================== */
+
+.inicio-hero-contenido {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 1000px;
+  text-align: center;
+  animation: aparecerInicio 0.8s ease;
+}
+
+/* ========================================
+   ETIQUETA
+======================================== */
+
+.inicio-etiqueta {
+  display: inline-block;
+  margin-bottom: 20px;
+  padding: 9px 18px;
+  border-radius: 50px;
+  background-color: #bad9ce;
+  color: #118c8c;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
+}
+
+/* ========================================
+   TÍTULO
+======================================== */
+
+.inicio-hero h1 {
+  margin: 0 auto 25px;
+  max-width: 900px;
+  color: #118c8c;
+  font-size: clamp(2.8rem, 7vw, 5.2rem);
+  line-height: 1.05;
+  font-weight: 800;
+  letter-spacing: -2px;
+  transition: color 0.3s ease;
+}
+
+/* ========================================
+   TEXTO
+======================================== */
+
+.inicio-hero p {
+  max-width: 650px;
+  margin: 0 auto 35px;
+  color: #3f5f5d;
+  font-size: 1.1rem;
+  line-height: 1.7;
+  transition: color 0.3s ease;
+}
+
+/* ========================================
+   BOTÓN
+======================================== */
+
+.inicio-botones {
+  display: flex;
+  justify-content: center;
+}
+
+.inicio-boton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  min-height: 52px;
+  padding: 0 30px;
+  border-radius: 10px;
+  background-color: #f2bb16;
+  color: #222222;
+  text-decoration: none;
+  font-size: 1rem;
+  font-weight: 700;
+  box-shadow:
+    0 8px 20px rgba(242, 187, 22, 0.25);
+  transition:
+    transform 0.25s ease,
+    background-color 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.inicio-boton:hover {
+  transform: translateY(-4px);
+  background-color: #118c8c;
+  color: #ffffff;
+  box-shadow:
+    0 12px 25px rgba(17, 140, 140, 0.3);
+}
+
+.inicio-flecha {
+  font-size: 1.3rem;
+  transition: transform 0.25s ease;
+}
+
+.inicio-boton:hover .inicio-flecha {
+  transform: translateX(6px);
+}
+
+/* ========================================
+   CÓMO FUNCIONA - MODO CLARO
+======================================== */
+
+.inicio-informacion {
+  padding: 100px 20px;
+  background-color: #f8fbfa;
+  transition:
+    background-color 0.3s ease;
+}
+
+/* ========================================
+   TÍTULO DE LA SECCIÓN
+======================================== */
+
+.inicio-titulo {
+  max-width: 750px;
+  margin: 0 auto 55px;
+  text-align: center;
+}
+
+.inicio-titulo span {
+  display: inline-block;
+  margin-bottom: 10px;
+  color: #e36414;
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  transition: color 0.3s ease;
+}
+
+.inicio-titulo h2 {
+  margin: 0 0 15px;
+  color: #118c8c;
+  font-size: clamp(2rem, 4vw, 2.8rem);
+  line-height: 1.2;
+  transition: color 0.3s ease;
+}
+
+.inicio-titulo p {
+  max-width: 650px;
+  margin: auto;
+  color: #555555;
+  line-height: 1.7;
+  transition: color 0.3s ease;
+}
+
+/* ========================================
+   TARJETAS
+======================================== */
+
+.inicio-pasos {
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 25px;
+}
+
+.inicio-paso {
+  position: relative;
+  padding: 32px;
+  min-height: 250px;
+  background-color: #ffffff;
+  border: 1px solid #bad9ce;
+  border-radius: 18px;
+  box-shadow:
+    0 8px 25px rgba(17, 140, 140, 0.08);
+  overflow: hidden;
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease,
+    border-color 0.3s ease,
+    background-color 0.3s ease;
+}
+
+.inicio-paso:hover {
+  transform: translateY(-10px);
+  border-color: #f2bb16;
+  box-shadow:
+    0 18px 35px rgba(17, 140, 140, 0.15);
+}
+
+/* ========================================
+   PARTE SUPERIOR
+======================================== */
+
+.inicio-paso-superior {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 30px;
+}
+
+.inicio-numero {
+  color: #118c8c;
+  font-size: 1.1rem;
+  font-weight: 800;
+  transition: color 0.3s ease;
+}
+
+.inicio-icono {
+  width: 55px;
+  height: 55px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 14px;
+  background-color: #bad9ce;
+  font-size: 1.6rem;
+  transition:
+    transform 0.3s ease,
+    background-color 0.3s ease;
+}
+
+.inicio-paso:hover .inicio-icono {
+  transform: rotate(-5deg) scale(1.1);
+  background-color: #f2bb16;
+}
+
+/* ========================================
+   TEXTO DE TARJETAS
+======================================== */
+
+.inicio-paso h3 {
+  margin: 0 0 12px;
+  color: #118c8c;
+  font-size: 1.4rem;
+  transition: color 0.3s ease;
+}
+
+.inicio-paso p {
+  margin: 0;
+  color: #666666;
+  line-height: 1.7;
+  transition: color 0.3s ease;
+}
+
+/* ========================================
+   LÍNEA DECORATIVA
+======================================== */
+
+.inicio-paso-linea {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 0;
+  height: 5px;
+  background-color: #f2bb16;
+  transition:
+    width 0.35s ease,
+    background-color 0.3s ease;
+}
+
+.inicio-paso:hover .inicio-paso-linea {
+  width: 100%;
+}
+
+/* ========================================
+   MODO OSCURO
+======================================== */
+
+body.modo-oscuro .inicio {
+  background-color: #071f20;
+  color: #ffffff;
+}
+
+/* ========================================
+   MODO OSCURO - HERO
+======================================== */
+
+body.modo-oscuro .inicio-hero {
+  background:
+    radial-gradient(
+      circle at 15% 20%,
+      rgba(17, 140, 140, 0.35),
+      transparent 35%
+    ),
+    radial-gradient(
+      circle at 85% 80%,
+      rgba(242, 187, 22, 0.12),
+      transparent 30%
+    ),
+    linear-gradient(
+      135deg,
+      #071f20 0%,
+      #0b3f40 55%,
+      #0b5d5e 100%
+    );
+}
+
+/* Decoración del hero en oscuro */
+
+body.modo-oscuro .inicio-hero::before {
+  background-color: rgba(17, 140, 140, 0.15);
+}
+
+body.modo-oscuro .inicio-hero::after {
+  background-color: rgba(242, 187, 22, 0.12);
+}
+
+/* ========================================
+   MODO OSCURO - CONTENIDO HERO
+======================================== */
+
+body.modo-oscuro .inicio-etiqueta {
+  background-color: #0b5d5e;
+  color: #bad9ce;
+}
+
+body.modo-oscuro .inicio-hero h1 {
+  color: #bad9ce;
+}
+
+body.modo-oscuro .inicio-hero p {
+  color: #d9eeee;
+}
+
+/* ========================================
+   MODO OSCURO - BOTÓN
+======================================== */
+
+body.modo-oscuro .inicio-boton {
+  background-color: #f2bb16;
+  color: #172020;
+  box-shadow:
+    0 8px 22px rgba(242, 187, 22, 0.2);
+}
+
+body.modo-oscuro .inicio-boton:hover {
+  background-color: #118c8c;
+  color: #ffffff;
+  box-shadow:
+    0 12px 28px rgba(17, 140, 140, 0.3);
+}
+
+/* ========================================
+   MODO OSCURO - CÓMO FUNCIONA
+======================================== */
+
+body.modo-oscuro .inicio-informacion {
+  background-color: #071f20;
+}
+
+body.modo-oscuro .inicio-titulo span {
+  color: #f2bb16;
+}
+
+body.modo-oscuro .inicio-titulo h2 {
+  color: #bad9ce;
+}
+
+body.modo-oscuro .inicio-titulo p {
+  color: #c8dddd;
+}
+
+/* ========================================
+   MODO OSCURO - TARJETAS
+======================================== */
+
+body.modo-oscuro .inicio-paso {
+  background-color: #0b3f40;
+  border-color: #0b5d5e;
+  box-shadow:
+    0 8px 25px rgba(0, 0, 0, 0.25);
+}
+
+body.modo-oscuro .inicio-paso:hover {
+  border-color: #f2bb16;
+  box-shadow:
+    0 18px 35px rgba(17, 140, 140, 0.2);
+}
+
+/* ========================================
+   MODO OSCURO - NÚMERO
+======================================== */
+
+body.modo-oscuro .inicio-numero {
+  color: #f2bb16;
+}
+
+/* ========================================
+   MODO OSCURO - ICONOS
+======================================== */
+
+body.modo-oscuro .inicio-icono {
+  background-color: #0b5d5e;
+  color: #bad9ce;
+}
+
+body.modo-oscuro .inicio-paso:hover .inicio-icono {
+  background-color: #f2bb16;
+  color: #071f20;
+}
+
+/* ========================================
+   MODO OSCURO - TEXTO TARJETAS
+======================================== */
+
+body.modo-oscuro .inicio-paso h3 {
+  color: #bad9ce;
+}
+
+body.modo-oscuro .inicio-paso p {
+  color: #c8dddd;
+}
+
+/* ========================================
+   MODO OSCURO - LÍNEA
+======================================== */
+
+body.modo-oscuro .inicio-paso-linea {
+  background-color: #f2bb16;
+}
+
+/* ========================================
+   ANIMACIÓN
+======================================== */
+
+@keyframes aparecerInicio {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ========================================
+   RESPONSIVE
+======================================== */
+
+@media (max-width: 768px) {
+  .inicio-hero {
+    min-height: 65vh;
+    padding: 70px 20px;
+  }
+
+  .inicio-hero h1 {
+    font-size: 3rem;
+    letter-spacing: -1px;
+  }
+
+  .inicio-hero p {
+    font-size: 1rem;
+  }
+
+  .inicio-informacion {
+    padding: 70px 20px;
+  }
+
+  .inicio-pasos {
+    grid-template-columns: 1fr;
+    max-width: 550px;
+  }
+
+  .inicio-paso {
+    min-height: auto;
+  }
+}
+
+@media (max-width: 480px) {
+  .inicio-hero {
+    padding: 60px 20px;
+  }
+
+  .inicio-hero h1 {
+    font-size: 2.35rem;
+  }
+
+  .inicio-hero p {
+    font-size: 0.95rem;
+  }
+
+  .inicio-boton {
+    width: 100%;
+  }
+
+  .inicio-informacion {
+    padding: 60px 20px;
+  }
+
+  .inicio-titulo h2 {
+    font-size: 2rem;
+  }
+
+  .inicio-paso {
+    padding: 25px;
+  }
+}

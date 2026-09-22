@@ -1,0 +1,286 @@
+/* ========================================
+   ASISTENTE DE RESERVA
+======================================== */
+
+.booking-page {
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 70px 20px;
+    box-sizing: border-box;
+    background-color: #f8fbfa;
+    color: #333333;
+    transition:
+        background-color 0.3s ease,
+        color 0.3s ease;
+}
+
+/* ========================================
+   CONTENEDOR PRINCIPAL
+======================================== */
+
+.booking-container {
+    width: 100%;
+    max-width: 1100px;
+    box-sizing: border-box;
+    background-color: #ffffff;
+    border: 1px solid #bad9ce;
+    border-radius: 20px;
+    padding: 40px;
+    box-shadow:
+        0 10px 40px rgba(17, 140, 140, 0.08);
+    transition:
+        background-color 0.3s ease,
+        border-color 0.3s ease,
+        box-shadow 0.3s ease;
+}
+
+/* ========================================
+   CONTENIDO DE CADA PASO
+======================================== */
+
+.booking-content {
+    padding: 50px 20px;
+    min-height: 400px;
+    box-sizing: border-box;
+}
+
+/* ========================================
+   BOTONES DE NAVEGACIÓN
+======================================== */
+
+.booking-buttons {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    padding: 0 20px;
+}
+
+/* Estilo general */
+
+.booking-buttons button {
+    min-height: 48px;
+    padding: 0 28px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 0.95rem;
+    font-weight: 700;
+    transition:
+        transform 0.25s ease,
+        background-color 0.25s ease,
+        color 0.25s ease,
+        box-shadow 0.25s ease;
+}
+
+/* ========================================
+   BOTÓN CONTINUAR
+======================================== */
+
+.btn-next {
+    margin-left: auto;
+    background-color: #f2bb16;
+    color: #172020;
+    box-shadow:
+        0 7px 18px rgba(242, 187, 22, 0.22);
+}
+
+.btn-next:hover {
+    transform: translateY(-3px);
+    background-color: #118c8c;
+    color: #ffffff;
+    box-shadow:
+        0 10px 22px rgba(17, 140, 140, 0.25);
+}
+
+.btn-next:active {
+    transform: translateY(-1px);
+}
+
+/* ========================================
+   BOTÓN ATRÁS
+======================================== */
+
+.btn-back {
+    background-color: #bad9ce;
+    color: #118c8c;
+}
+
+.btn-back:hover {
+    transform: translateY(-3px);
+    background-color: #118c8c;
+    color: #ffffff;
+    box-shadow:
+        0 8px 18px rgba(17, 140, 140, 0.2);
+}
+
+.btn-back:active {
+    transform: translateY(-1px);
+}
+
+/* ========================================
+   BOTÓN CONFIRMAR
+======================================== */
+
+.btn-confirm {
+    min-height: 48px;
+    padding: 0 30px;
+    border: none;
+    border-radius: 10px;
+    background-color: #f2bb16;
+    color: #172020;
+    font-family: inherit;
+    font-size: 0.95rem;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow:
+        0 7px 18px rgba(242, 187, 22, 0.22);
+    transition:
+        transform 0.25s ease,
+        background-color 0.25s ease,
+        color 0.25s ease,
+        box-shadow 0.25s ease;
+}
+
+.btn-confirm:hover {
+    transform: translateY(-3px);
+    background-color: #118c8c;
+    color: #ffffff;
+    box-shadow:
+        0 10px 22px rgba(17, 140, 140, 0.25);
+}
+
+.btn-confirm:disabled {
+    background-color: #bad9ce;
+    color: #118c8c;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+/* ========================================
+   MODO OSCURO
+======================================== */
+
+body.modo-oscuro .booking-page {
+    background-color: #071f20;
+    color: #ffffff;
+}
+
+/* ========================================
+   CONTENEDOR OSCURO
+======================================== */
+
+body.modo-oscuro .booking-container {
+    background-color: #0b3f40;
+    border-color: #0b5d5e;
+    box-shadow:
+        0 10px 40px rgba(0, 0, 0, 0.25);
+}
+
+/* ========================================
+   BOTONES OSCUROS
+======================================== */
+
+body.modo-oscuro .btn-next {
+    background-color: #f2bb16;
+    color: #172020;
+    box-shadow:
+        0 7px 20px rgba(242, 187, 22, 0.18);
+}
+
+body.modo-oscuro .btn-next:hover {
+    background-color: #118c8c;
+    color: #ffffff;
+    box-shadow:
+        0 10px 24px rgba(17, 140, 140, 0.3);
+}
+
+body.modo-oscuro .btn-back {
+    background-color: #0b5d5e;
+    color: #bad9ce;
+}
+
+body.modo-oscuro .btn-back:hover {
+    background-color: #118c8c;
+    color: #ffffff;
+    box-shadow:
+        0 8px 20px rgba(17, 140, 140, 0.25);
+}
+
+body.modo-oscuro .btn-confirm {
+    background-color: #f2bb16;
+    color: #172020;
+}
+
+body.modo-oscuro .btn-confirm:hover {
+    background-color: #118c8c;
+    color: #ffffff;
+}
+
+/* ========================================
+   RESPONSIVE
+======================================== */
+
+@media (max-width: 768px) {
+
+    .booking-page {
+        padding: 50px 15px;
+        align-items: flex-start;
+    }
+
+    .booking-container {
+        padding: 30px 20px;
+        border-radius: 18px;
+    }
+
+    .booking-content {
+        padding: 40px 10px;
+        min-height: 350px;
+    }
+
+    .booking-buttons {
+        padding: 0 10px;
+    }
+
+    .booking-buttons button {
+        min-height: 46px;
+        padding: 0 22px;
+    }
+}
+
+@media (max-width: 480px) {
+
+    .booking-page {
+        padding: 30px 12px;
+    }
+
+    .booking-container {
+        padding: 25px 15px;
+        border-radius: 16px;
+    }
+
+    .booking-content {
+        padding: 30px 5px;
+        min-height: 320px;
+    }
+
+    .booking-buttons {
+        padding: 0 5px;
+    }
+
+    .booking-buttons button {
+        flex: 1;
+        min-height: 45px;
+        padding: 0 15px;
+        font-size: 0.9rem;
+    }
+
+    .btn-next {
+        margin-left: 0;
+    }
+}
